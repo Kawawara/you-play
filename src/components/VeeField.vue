@@ -49,7 +49,7 @@
         :autocomplete="field.name"
       >
         <template v-if="field.as === 'select'">
-          <option v-for="option in field.options" :key="option.label" :value="option.id">{{ option.label }}</option>
+          <option v-for="option in field.options" :key="option.label" :value="option.value">{{ option.label }}</option>
         </template>
       </Field>
       <template v-if="(field.as === 'input' || !field.as) && field.type === 'password'">

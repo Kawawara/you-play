@@ -24,29 +24,34 @@ const { register } = await useAuth()
       required: true
     },
     {
-      label: 'Name',
+      label: 'Prénom',
       name: 'name',
       required: true
     },
     {
-      label: 'Lastname',
+      label: 'Nom de Famille',
       name: 'lastName',
       required: true
     },
     {
-      label: 'Phone Number',
+      label: 'Numéro de Téléphone',
       name: 'phoneNumber',
       required: true
     },
     {
-      label: 'Gender',
+      label: 'Genre',
       name: 'gender',
       as: "select",
-      options: [{label: "Male", id:1},{label: "Female", id:0}],
+      options: [{label: "Homme", value:"Homme"},{label: "Femme", value:"Femme"}],
       required: true
     },
     {
-      label: 'City',
+      label: 'Age',
+      name: 'age',
+      required: true
+    },
+    {
+      label: 'Ville',
       name: 'city',
       required: true
     },
@@ -71,7 +76,6 @@ const { register } = await useAuth()
   })
 
   const onSubmit = async (values: any) => {
-    console.log(values)
     await register(values)
     router.push({ name: 'search' })
   }

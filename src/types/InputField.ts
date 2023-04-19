@@ -11,6 +11,6 @@ export type InputField = {
 }
 
 export type SelectOption = {
-  id: number,
+  value: string,
   label: string
 }

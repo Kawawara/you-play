@@ -63,11 +63,8 @@ if(user.value && user.value.status == 0){
           email: data.email
         }
         user.value = fetchedUser
-        console.log(response.data.data)
-        console.log(user)
         return true
       } catch(e) {
-        console.log("NO good TEST")
         console.error(e)
         jwt.value = ''
         return false

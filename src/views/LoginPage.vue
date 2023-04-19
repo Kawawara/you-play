@@ -34,9 +34,6 @@ const fields: InputField[] = [
 
   const onSubmit = async (values: any) => {
     const success = await login(values)
-    console.log(success)
-    // if (success) console.log("authenticated")
-    // console.log(user)
     if (success) router.push({ name: 'home' })
 }
 
