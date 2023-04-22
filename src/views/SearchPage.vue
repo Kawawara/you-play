@@ -2,6 +2,7 @@
 import { getUsers } from '@/services'
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
+import { AppLayout } from '@/components';
 
 const {user} = await useAuth();
 
@@ -15,6 +16,8 @@ const users = await getUsers();
 </script>
 
 <template>
+  <AppLayout>
+    
     <router-link :to="{name:'home'}" class="flex items-center">retour</router-link>
     <div v-if="user !== undefined" class="about">
       <ul>
@@ -26,14 +29,16 @@ const users = await getUsers();
         </li>
       </ul>
     </div>
-  </template>
-  
-  <style>
-  @media (min-width: 1024px) {
-    .about {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-    }
+    
+  </AppLayout>
+</template>
+
+<style>
+@media (min-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
   }
-  </style>
+}
+</style>

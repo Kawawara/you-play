@@ -1,9 +1,18 @@
 
 export { default as MainNavElement } from './nav/MainNavElement.vue'
 
+// Layout
+export { default as AppLayout} from './layout/AppLayout.vue'
+
 // Connection page
 export { default as SubmitButton } from './connection/SubmitButton.vue'
 export { default as ConnectionPage } from './connection/ConnectionPage.vue'
+
+// Likes
+export { default as LikesMenu } from './likes/LikesMenu.vue'
+
+// Messages
+export { default as MessagesMenu } from './messages/MessagesMenu.vue'
 
 // ICONS
 export { default as IconBurger } from './icons/IconBurger.vue'
