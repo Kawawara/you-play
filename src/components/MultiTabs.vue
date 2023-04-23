@@ -19,9 +19,9 @@ import { computed, ref } from 'vue';
 </script>
 
 <template>
-  <div class="flex flex-col" :class="`gap-4`">
+  <div class="flex flex-col px-2" :class="`gap-4`">
 
-    <div class="flex" :class="` justify-start`">
+    <div class="flex" :class="` justify-center`">
       <div class="tabs flex flex-nowrap whitespace-nowrap overflow-auto px-6 py-1">
         <a 
           v-for="(tab, index) in tabs" 

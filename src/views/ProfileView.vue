@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
-import { AppLayout, LikesMenu, MessagesMenu } from '@/components';
+import TheProfile from '../components/TheProfileWelcome.vue'
+import { AppLayout, LikesMenu, MessagesMenu, ParametresMenu, PromotionsMenu } from '@/components';
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
 
@@ -17,15 +17,15 @@ if (!logedIn) {
 
 const tabs = [
   {
-    name: 'Likes',
-    label: 'Likes',
-    component: LikesMenu,
+    name: 'Promotions',
+    label: 'Promotions',
+    component: PromotionsMenu,
     props: {    }
   },
   {
-    name: 'Messages',
-    label: 'Messages',
-    component: MessagesMenu,
+    name: 'Paramètres',
+    label: 'Paramètres',
+    component: ParametresMenu,
     props: {    }
   }
 ]
@@ -35,7 +35,7 @@ const tabs = [
 <template>
     <AppLayout :tabs="tabs">
 
-      <TheWelcome></TheWelcome>
+      <TheProfile></TheProfile>
 
     </AppLayout>
 </template>

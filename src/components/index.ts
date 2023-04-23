@@ -7,12 +7,20 @@ export { default as AppLayout} from './layout/AppLayout.vue'
 // Connection page
 export { default as SubmitButton } from './connection/SubmitButton.vue'
 export { default as ConnectionPage } from './connection/ConnectionPage.vue'
+export { default as LoginPage } from './connection/LoginPage.vue'
+export { default as SignInPage } from './connection/SignInPage.vue'
 
 // Likes
 export { default as LikesMenu } from './likes/LikesMenu.vue'
 
 // Messages
 export { default as MessagesMenu } from './messages/MessagesMenu.vue'
+
+// Likes
+export { default as ParametresMenu } from './parametres/ParametresMenu.vue'
+
+// Messages
+export { default as PromotionsMenu } from './promotions/PromotionsMenu.vue'
 
 // ICONS
 export { default as IconBurger } from './icons/IconBurger.vue'

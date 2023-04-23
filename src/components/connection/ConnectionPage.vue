@@ -4,7 +4,7 @@
   } from '@/components'
 import { useAuth } from '@/services';
 
-  const { getOauth2 } = await useAuth()
+  // const { getOauth2 } = await useAuth()
   // const test = await getOauth2()
 
   defineProps({
