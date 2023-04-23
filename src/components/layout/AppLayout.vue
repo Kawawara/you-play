@@ -13,6 +13,10 @@
       default: () => [],
       required: true,
     },
+    profile: {
+        type: Boolean,
+        required: true,
+    }
   })
 
 
@@ -29,7 +33,8 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <router-link to="profile" class="flex items-center">Profile</router-link>
+                <router-link v-if="!profile" to="profile" class="flex items-center">Profile</router-link>
+                <router-link v-if="profile" to="/" class="flex items-center">Search</router-link>
                 <div></div>
             </div>
             <MultiTabs :tabs="tabs"/>

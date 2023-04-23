@@ -33,7 +33,7 @@ const tabs = [
 </script>
 
 <template>
-    <AppLayout :tabs="tabs">
+    <AppLayout :tabs="tabs" :profile="false" >
 
       <TheWelcome></TheWelcome>
 
