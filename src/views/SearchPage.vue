@@ -2,7 +2,7 @@
 import { getUsers } from '@/services'
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
-import { AppLayout } from '@/components';
+import { AppLayout, LikesMenu, MessagesMenu } from '@/components';
 
 const {user} = await useAuth();
 
@@ -13,10 +13,28 @@ if (user?.value == undefined) {
 
 const users = await getUsers();
 
+const tabs = [
+  {
+    name: 'Likes',
+    label: 'Likes',
+    component: LikesMenu,
+    props: {    }
+  },
+  {
+    name: 'Messages',
+    label: 'Messages',
+    component: MessagesMenu,
+    props: {    }
+  }
+]
+
+console.log(users)
+
+
 </script>
 
 <template>
-  <AppLayout>
+  <AppLayout :tabs="tabs" :profile="false">
     
     <router-link :to="{name:'home'}" class="flex items-center">retour</router-link>
     <div v-if="user !== undefined" class="about">
@@ -29,7 +47,7 @@ const users = await getUsers();
         </li>
       </ul>
     </div>
-    
+
   </AppLayout>
 </template>
 
