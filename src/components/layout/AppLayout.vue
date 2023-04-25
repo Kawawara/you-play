@@ -66,6 +66,7 @@
     display: flex;
     justify-content: space-between;
     height: 80px;
+    background: linear-gradient(41.15deg, rgba(93, 84, 203, 0.5) 5.67%, rgba(255, 218, 85, 0.5) 79.51%), linear-gradient(125.28deg, #FF3FFF 40.37%, #5D54CB 114.21%);;
 }
 
 #main-container {
