@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { AppLayout, LikesMenu, MessagesMenu } from '@/components';
+import { AppLayout, LikesMenu, MessagesMenu, SearchComponent, SearchComponentDetaille} from '@/components';
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
-import SearchComponent from '../components/search/SearchComponent.vue'
 
 const {user} = await useAuth();
 

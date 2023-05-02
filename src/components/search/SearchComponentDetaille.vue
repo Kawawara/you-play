@@ -1,3 +1,55 @@
+<script setup lang="ts">
+  import { IconHome } from '@/components'
+  import { ref, onMounted } from "vue";
+  import { getUsers } from '@/services';
+
+  const users = await getUsers();
+
+  var myUser = users[0];
+  for (const user of users) {
+      if(user.id == 500){ //todo: recuperer l'id depuis le searchcomponent
+          myUser = user;
+          break;
+      }
+  }
+
+  onMounted(() => {
+    const photos = ['photo_1.jpg',  'photo_2.jpg',  'photo_3.jpg'];
+
+    let currentPhotoIndex = 0;
+
+    const photoContainer = document.getElementById("card-photo")!;
+    const swipeLeftButton = document.getElementById("swipe-left")!;
+    const swipeRightButton = document.getElementById("swipe-right")!;
+
+    function displayPhoto() {
+        photoContainer.style.backgroundImage = `url(${photos[currentPhotoIndex]})`;
+    }
+
+    function swipeLeft(event: MouseEvent) {
+        currentPhotoIndex--;
+        if (currentPhotoIndex < 0) {
+          currentPhotoIndex = photos.length - 1;
+        }
+        displayPhoto();
+    }
+
+    function swipeRight(event: MouseEvent) {
+        console.log("hey");
+        currentPhotoIndex++;
+        if (currentPhotoIndex > photos.length - 1) {
+            currentPhotoIndex = 0;
+        }
+        displayPhoto();
+    }
+
+    swipeLeftButton.addEventListener('click', swipeLeft);
+    swipeRightButton.addEventListener('click', swipeRight);
+
+    displayPhoto();
+  });
+</script>
+
 <template>
   <div class="card">
     <div class="card-photo" id="card-photo">
@@ -192,55 +244,3 @@ hr {
 
 </style>
 
-
-<script setup lang="ts">
-import { IconHome } from '@/components'
-import { ref, onMounted } from "vue";
-import { getUsers } from '@/services';
-
-const users = await getUsers();
-
-var myUser = users[0];
-for (const user of users) {
-    if(user.id == 500){ //todo: recuperer l'id depuis le searchcomponent
-        myUser = user;
-        break;
-    }
-}
-
-onMounted(() => {
-    const photos = ['photo_1.jpg',  'photo_2.jpg',  'photo_3.jpg'];
-
-    let currentPhotoIndex = 0;
-
-    const photoContainer = document.getElementById("card-photo")!;
-    const swipeLeftButton = document.getElementById("swipe-left")!;
-    const swipeRightButton = document.getElementById("swipe-right")!;
-
-    function displayPhoto() {
-        photoContainer.style.backgroundImage = `url(${photos[currentPhotoIndex]})`;
-    }
-
-    function swipeLeft(event: MouseEvent) {
-        currentPhotoIndex--;
-        if (currentPhotoIndex < 0) {
-          currentPhotoIndex = photos.length - 1;
-        }
-        displayPhoto();
-    }
-
-    function swipeRight(event: MouseEvent) {
-        console.log("hey");
-        currentPhotoIndex++;
-        if (currentPhotoIndex > photos.length - 1) {
-            currentPhotoIndex = 0;
-        }
-        displayPhoto();
-    }
-
-    swipeLeftButton.addEventListener('click', swipeLeft);
-    swipeRightButton.addEventListener('click', swipeRight);
-
-    displayPhoto();
-});
-</script>

@@ -6,7 +6,8 @@ const getUsers = async() => {
     const { Axios } = useAxios()
 
     const response = await Axios.get(`users/`)
-    return response.data.data.data as [UserComplet]
+    console.log(response.data.data)
+    return response.data.data as [UserComplet]
 }
 
 export default getUsers

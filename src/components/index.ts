@@ -10,8 +10,23 @@ export { default as ConnectionPage } from './connection/ConnectionPage.vue'
 export { default as LoginPage } from './connection/LoginPage.vue'
 export { default as SignInPage } from './connection/SignInPage.vue'
 
+// Search
+export { default as SearchComponent } from './search/SearchComponent.vue'
+export { default as SearchComponentDetaille } from './search/SearchComponentDetaille.vue'
+
 // Likes
 export { default as LikesMenu } from './likes/LikesMenu.vue'
+export { default as LikesOptionBar } from './likes/LikesOptionBar.vue'
+
+// Profile
+export { default as ProfileCardShort } from './profile/ProfileCardShort.vue'
+export { default as ProfileStatusComponent } from './profile/ProfileStatusComponent.vue'
+export { default as ProfileDescriptionComponnent } from './profile/ProfileDescriptionComponnent.vue'
+export { default as ProfileTagsMusiqueComponent } from './profile/ProfileTagsMusiqueComponent.vue'
+export { default as ProfileTagsMovieComponent } from './profile/ProfileTagsMovieComponent.vue'
+export { default as ProfileTagsVideoGamesComponent } from './profile/ProfileTagsVideoGamesComponent.vue'
+export { default as ProfileTagsLangageComponent } from './profile/ProfileTagsLangageComponent.vue'
+export { default as ProfileTagsSportsComponent } from './profile/ProfileTagsSportsComponent.vue'
 
 // Messages
 export { default as MessagesMenu } from './messages/MessagesMenu.vue'
