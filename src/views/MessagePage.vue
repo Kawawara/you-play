@@ -3,6 +3,7 @@ import { getUsers } from '@/services'
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
 import { AppLayout, LikesMenu, ConversationsMenu } from '@/components';
+import MessageComponent from '../components/messages/MessageComponent.vue'
 
 const {user} = await useAuth();
 
@@ -28,35 +29,12 @@ const tabs = [
   }
 ]
 
-console.log(users)
-
-
 </script>
 
 <template>
   <AppLayout :tabs="tabs" :profile="false">
     
-    <router-link :to="{name:'home'}" class="flex items-center">retour</router-link>
-    <div v-if="user !== undefined" class="about">
-      <ul>
-        <li v-for="user in users" :key="user.id" :field="user">
-            <span>{{user?.name}}&nbsp;</span>
-            <span>{{user?.lastName}}&nbsp;</span>
-            <span>{{user?.gender}}&nbsp;</span>
-            <span>{{user?.city}}&nbsp;</span>
-        </li>
-      </ul>
-    </div>
+    <MessageComponent></MessageComponent>
 
   </AppLayout>
 </template>
-
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>

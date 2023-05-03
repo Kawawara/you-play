@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TheProfile from '../components/TheProfileWelcome.vue'
-import { AppLayout, LikesMenu, MessagesMenu, ParametresMenu, PromotionsMenu } from '@/components';
+import { AppLayout, LikesMenu, ConversationsMenu, ParametresMenu, PromotionsMenu } from '@/components';
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
 

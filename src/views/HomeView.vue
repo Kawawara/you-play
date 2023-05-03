@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TheWelcome from '../components/TheWelcome.vue'
-import { AppLayout, LikesMenu, MessagesMenu } from '@/components';
+import { AppLayout, LikesMenu, ConversationsMenu } from '@/components';
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
 
@@ -25,7 +25,7 @@ const tabs = [
   {
     name: 'Messages',
     label: 'Messages',
-    component: MessagesMenu,
+    component: ConversationsMenu,
     props: {    }
   }
 ]

@@ -14,7 +14,7 @@ export { default as SignInPage } from './connection/SignInPage.vue'
 export { default as LikesMenu } from './likes/LikesMenu.vue'
 
 // Messages
-export { default as MessagesMenu } from './messages/MessagesMenu.vue'
+export { default as ConversationsMenu } from './messages/ConversationsMenu.vue'
 
 // Likes
 export { default as ParametresMenu } from './parametres/ParametresMenu.vue'
