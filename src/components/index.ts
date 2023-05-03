@@ -38,6 +38,11 @@ export { default as ParametresMenu } from './parametres/ParametresMenu.vue'
 export { default as PromotionsMenu } from './promotions/PromotionsMenu.vue'
 
 // ICONS
+export { default as IconBoost } from './icons/IconBoost.vue'
+export { default as IconShowBack } from './icons/IconShowBack.vue'
+export { default as IconDislike } from './icons/IconDislike.vue'
+export { default as IconSuperLike } from './icons/IconSuperLike.vue'
+export { default as IconLike } from './icons/IconLike.vue'
 export { default as IconBurger } from './icons/IconBurger.vue'
 export { default as IconHome } from './icons/IconHome.vue'
 export { default as IconPiggyBank } from './icons/IconPiggyBank.vue'

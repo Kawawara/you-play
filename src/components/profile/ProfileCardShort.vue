@@ -126,7 +126,6 @@ const currentSection = computed(() => sections.find(item => item.position == cur
 
 <style>
 .option-bar {
-  border: solid 1px red;
   position: absolute;
   bottom: 0px;
   left: 0px;
