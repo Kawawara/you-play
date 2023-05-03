@@ -2,6 +2,11 @@ export type Conv = {
     id: number
     idFirstUser: number
     idSecondUser: number
+    secondUserName: string
+    secondUserPhoto: string
+    nameLastMessage: string
+    contentLastMessage : string
+    timeLastMessage: string
 }
 
 export type Message = {
@@ -9,4 +14,5 @@ export type Message = {
     idConversation: number
     idUser: number
     content: string
+    created_at: Date
 }

@@ -1,21 +1,42 @@
+<script setup lang="ts">
+import { getMessage, useAuth } from '@/services';
+import { useRoute } from 'vue-router';
+import { getConv } from '@/services';
+
+const route = useRoute();
+const convId = Number(route.params.id);
+
+const {user} = await useAuth();
+const mess = await getMessage(convId);
+
+var secondUserName = '';
+var secondUserPhoto = '';
+
+const convs = await getConv(user.value.id);
+for (const conv of convs) {
+    if(conv.id == convId){
+        secondUserName = conv.secondUserName;
+        secondUserPhoto = conv.secondUserPhoto;
+        break;
+    }
+}
+// TODO sort mess created_at
+
+const submit = async () => {
+    // envoyer message au back
+};
+
+</script>
+
 <template>
     <div class="container">
-		<h1><img id="miniPicture" src="photo_1.jpg"/> Fiona</h1>
+		<h1><img id="miniPicture" :src="secondUserPhoto"/> {{ secondUserName }}</h1>
 		<div class="messages">
-			<div class="message">
-				<p>Hello!</p>
-			</div>
-			<div class="message sent">
-				<p>Hi, how are you?</p>
-			</div>
-			<div class="message">
-				<p>I'm good, thanks for asking. How about you?</p>
-			</div>
-			<div class="message sent">
-				<p>I'm doing well too, thanks.</p>
+			<div v-for="mes in mess" :key="mes.id" :class="{ 'received': mes.idUser === user.value.id, 'sent': mes.idUser !== user.value.id }">
+				<p>{{ mes.content }}</p>
 			</div>
 		</div>
-		<form class="form">
+		<form class="form" @submit.prevent="submit">
 			<input type="text" placeholder="Type a message...">
 			<button>Send</button>
 		</form>
@@ -38,7 +59,7 @@
     align-items: flex-start;
     margin-bottom: 20px;
 }
-.message {
+.received {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
@@ -49,18 +70,18 @@
     align-self: flex-start;
     max-width: 60%;
 }
-.message.sent {
+.sent {
     align-self: flex-end;
     background-color: #218AFF;
 }
-.message p {
+.received p {
     margin: 0;
     padding: 0;
     font-size: 16px;
     line-height: 1.5;
     color: #333;
 }
-.message.sent p {
+.sent p {
     color: #fff;
 }
 .form {

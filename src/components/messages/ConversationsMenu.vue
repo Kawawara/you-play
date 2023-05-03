@@ -1,49 +1,42 @@
 <script setup lang="ts">
-import { getUsers, useAuth } from '@/services';
+import { getMessage, getUser, useAuth } from '@/services';
 import { getConv } from '@/services';
 
 const {user} = await useAuth();
 const convs = await getConv(user.value.id);
 
-console.log(user.value.id);
-console.log(convs);
-
-const users = await getUsers();
-console.log(users);
+for (const conv of convs) {
+    const mess = await getMessage(conv.id);
+    if(mess.length > 0)
+    {
+        const lastMess = mess[mess.length - 1]; //TODO sort ID desc
+        const userMess = await getUser(lastMess.idUser);
+        conv.secondUserName = userMess[0].name;
+        conv.secondUserPhoto = 'photo_1.jpg';
+        conv.contentLastMessage = lastMess.content;
+        conv.nameLastMessage = "You";
+        conv.timeLastMessage = lastMess.created_at.getHours().toString()
+        if(lastMess.idUser != user.value.id){
+            conv.nameLastMessage = userMess[0].name;
+        }
+    }
+}
 
 </script>
 
 <template>
-
-    <ul class="conversation-list">
-		<router-link :to="{name:'message'}"><li>
-		  <img class="avatar" src="photo_1.jpg"/>
-		  <div class="conversation-info">
-			<h3>Fiona</h3>
-			<p><span class="sender-name">You:</span> Hey, how's it going?</p>
-			<span class="timestamp">22:30</span>
-		  </div>
-		</li></router-link>
-		<router-link :to="{name:'message'}"><li>
-		  <img class="avatar" src="photo_2.jpg"/>
-		  <div class="conversation-info">
-			<h3>Ciuchino</h3>
-			<p><span class="sender-name">Ciuchino:</span> Not bad, thanks for asking.</p>
-			<span class="timestamp">17:03</span>
-		  </div>
-		</li></router-link>
-		<router-link :to="{name:'message'}"><li>
-		  <img class="avatar" src="photo_3.jpg"/>
-		  <div class="conversation-info">
-			<h3>Zenzy</h3>
-			<p><span class="sender-name">You:</span> What are you up to today?</p>
-			<span class="timestamp">10:09</span>
-		  </div>
-		</li></router-link>
-	</ul>	  
-
-    <p>Messages</p>
-    <p>{{user.username}}</p>
+  <ul class="conversation-list">
+    <li v-for="conv in convs" :key="conv.id">
+      <router-link :to="{name:'message', params: { id: conv.id }}">
+        <img class="avatar" :src="conv.secondUserPhoto">
+        <div class="conversation-info">
+          <h3>{{ conv.secondUserName }}</h3>
+          <p><span class="sender-name">{{conv.nameLastMessage}}:</span> {{ conv.contentLastMessage }}</p>
+          <span class="timestamp">{{ conv.timeLastMessage }}</span>
+        </div>
+      </router-link>
+    </li>
+  </ul>
 </template>
 
 <style type="text/css">
