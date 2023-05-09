@@ -10,8 +10,25 @@ export { default as ConnectionPage } from './connection/ConnectionPage.vue'
 export { default as LoginPage } from './connection/LoginPage.vue'
 export { default as SignInPage } from './connection/SignInPage.vue'
 
+// Search
+export { default as SearchComponent } from './search/SearchComponent.vue'
+export { default as SearchComponentDetaille } from './search/SearchComponentDetaille.vue'
+
 // Likes
 export { default as LikesMenu } from './likes/LikesMenu.vue'
+export { default as LikesOptionBar } from './likes/LikesOptionBar.vue'
+
+// Profile
+export { default as ProfileCardShort } from './profile/ProfileCardShort.vue'
+export { default as ProfilePicturesIndicator } from './profile/ProfilePicturesIndicator.vue'
+export { default as ProfileEmptyComponent } from './profile/ProfileEmptyComponent.vue'
+export { default as ProfileStatusComponent } from './profile/ProfileStatusComponent.vue'
+export { default as ProfileDescriptionComponnent } from './profile/ProfileDescriptionComponnent.vue'
+export { default as ProfileTagsMusiqueComponent } from './profile/ProfileTagsMusiqueComponent.vue'
+export { default as ProfileTagsMovieComponent } from './profile/ProfileTagsMovieComponent.vue'
+export { default as ProfileTagsVideoGamesComponent } from './profile/ProfileTagsVideoGamesComponent.vue'
+export { default as ProfileTagsLangageComponent } from './profile/ProfileTagsLangageComponent.vue'
+export { default as ProfileTagsSportsComponent } from './profile/ProfileTagsSportsComponent.vue'
 
 // Messages
 export { default as MessagesMenu } from './messages/MessagesMenu.vue'
@@ -23,6 +40,14 @@ export { default as ParametresMenu } from './parametres/ParametresMenu.vue'
 export { default as PromotionsMenu } from './promotions/PromotionsMenu.vue'
 
 // ICONS
+export { default as IconOnline } from './icons/IconOnline.vue'
+export { default as IconPosition } from './icons/IconPosition.vue'
+export { default as IconMoreInfos } from './icons/IconMoreInfos.vue'
+export { default as IconBoost } from './icons/IconBoost.vue'
+export { default as IconShowBack } from './icons/IconShowBack.vue'
+export { default as IconDislike } from './icons/IconDislike.vue'
+export { default as IconSuperLike } from './icons/IconSuperLike.vue'
+export { default as IconLike } from './icons/IconLike.vue'
 export { default as IconBurger } from './icons/IconBurger.vue'
 export { default as IconHome } from './icons/IconHome.vue'
 export { default as IconPiggyBank } from './icons/IconPiggyBank.vue'

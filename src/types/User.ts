@@ -13,7 +13,8 @@ export type UserComplet = {
   lastName: string,
   gender: string,
   city: string,
-  age: number
+  age: number,
+  description: string
 }
 
 export type Prefs = {

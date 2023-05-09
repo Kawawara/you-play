@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { AppLayout, LikesMenu, MessagesMenu, SearchComponent, SearchComponentDetaille} from '@/components';
+import { AppLayout, LikesMenu, MessagesMenu } from '@/components';
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
+import SearchComponentDetaille from '../components/search/SearchComponentDetaille.vue'
 
 const {user} = await useAuth();
 
@@ -34,7 +35,7 @@ const tabs = [
 <template>
     <AppLayout :tabs="tabs"  :profile="true">
 
-      <SearchComponent></SearchComponent>
+      <SearchComponentDetaille></SearchComponentDetaille>
 
     </AppLayout>
 </template>
