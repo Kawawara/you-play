@@ -7,12 +7,14 @@ import {
   ProfileTagsMovieComponent, 
   ProfileTagsVideoGamesComponent, 
   ProfileTagsLangageComponent, 
-  ProfileTagsSportsComponent 
+  ProfileTagsSportsComponent, 
+  ProfileEmptyComponent
 } from '@/components'
 import type { UserComplet } from '@/types';
 import { computed, ref } from 'vue';
+import { useSearch } from '@/services'
 
-
+const {getPictures} = await useSearch()
 
 const props = defineProps({
   user: {
@@ -20,6 +22,9 @@ const props = defineProps({
     required: true,
   }
 })
+
+const pics = await getPictures(props.user.id)
+console.log(pics)
 
 const tags_musique = ["Techno", "Rap", "Pop", "Jazz", "Latino"]
 const tags_movies = ["Harry Potter", "Back to the Future", "Spider-Man"]
@@ -91,14 +96,29 @@ const sections = [
     tags: tags_langage
   }
 },
+{
+  position: 8,
+  component: ProfileEmptyComponent,
+  props: {
+    name: ""
+  }
+},
+{
+  position: 9,
+  component: ProfileEmptyComponent,
+  props: {
+    name: ""
+  }
+},
 ]
 
 const currentSectionIndex = ref(1)
 const currentSection = computed(() => sections.find(item => item.position == currentSectionIndex.value))
+const currentPicture = computed(() => pics.find(item => item.position == currentSectionIndex.value))
 
 
   function posPlus() {
-    if(currentSectionIndex.value < 7) {
+    if(currentSectionIndex.value < pics.length) {
       currentSectionIndex.value ++
     }
   }
@@ -112,6 +132,7 @@ const currentSection = computed(() => sections.find(item => item.position == cur
 
 <template>
   <div class="card" :id="String(user.id)+'_card'">
+    <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/'+currentPicture?.fileName"/>
     <div class="button-container">
       <p class="swipe-left center-left" :id="String(user.id)+'_swipe-left'" @click=" posMinus()">&lt;</p>
       <p class="swipe-right center-right" :id="String(user.id)+'_swipe-right'" @click=" posPlus()">&gt;</p>

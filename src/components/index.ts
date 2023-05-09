@@ -20,6 +20,7 @@ export { default as LikesOptionBar } from './likes/LikesOptionBar.vue'
 
 // Profile
 export { default as ProfileCardShort } from './profile/ProfileCardShort.vue'
+export { default as ProfileEmptyComponent } from './profile/ProfileEmptyComponent.vue'
 export { default as ProfileStatusComponent } from './profile/ProfileStatusComponent.vue'
 export { default as ProfileDescriptionComponnent } from './profile/ProfileDescriptionComponnent.vue'
 export { default as ProfileTagsMusiqueComponent } from './profile/ProfileTagsMusiqueComponent.vue'

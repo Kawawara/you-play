@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ProfileCardShort, LikesOptionBar } from '@/components'
-import { getUsers } from '@/services';
+import { useSearch } from '@/services';
 
 
+const { getUsers } = await useSearch();
 const users = await getUsers();
 
 </script>
@@ -13,9 +14,9 @@ const users = await getUsers();
       <LikesOptionBar />
     </ProfileCardShort>
   </div>
-  <div v-for="user in users" :key="user.id" style="display: none;">
+  <!-- <div v-for="user in users" :key="user.id" style="display: none;">
     <ProfileCardShort :user="user">
       <LikesOptionBar />
     </ProfileCardShort>
-  </div>
+  </div> -->
 </template>

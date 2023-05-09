@@ -89,6 +89,14 @@ body {
     font-family: 'Open sans', sans-serif;
 }
 
+.button-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .card-info h2 {
     margin: 0;
     font-size: 1.5rem;
@@ -107,17 +115,9 @@ body {
     cursor: pointer;
 }
 
-.center-right{
-    position: relative;
+.center-right, .center-left{
     text-align: center;
-    top: 150%;
-    right: -90%;
-}
-
-.center-left{
-    position: relative;
-    text-align: center;
-    top: 200%;
+    top: 40%;
 }
 
 #bio {

@@ -1,8 +1,9 @@
 <script setup lang="ts">
   import { IconHome } from '@/components'
   import { ref, onMounted } from "vue";
-  import { getUsers } from '@/services';
+  import { useSearch } from '@/services';
 
+  const { getUsers } = await useSearch();
   const users = await getUsers();
 
   var myUser = users[0];
