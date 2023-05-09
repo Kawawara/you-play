@@ -33,7 +33,7 @@ import { IconLike, IconDislike, IconShowBack, IconBoost, IconSuperLike } from '@
     height: 36px;
     width: 36px;
     border-radius: 36px;
-    background-color: azure;
     display: flex;
+    cursor: pointer;
 }
 </style>
