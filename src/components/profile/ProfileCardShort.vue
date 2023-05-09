@@ -53,7 +53,7 @@ const sections = [
   }
 },
 {
-  position: 3,
+  position: 5,
   component: ProfileTagsMusiqueComponent,
   props: {
     name: "Musiques",
@@ -62,7 +62,7 @@ const sections = [
   }
 },
 {
-  position: 4,
+  position: 6,
   component: ProfileTagsMovieComponent,
   props: {
     name: "Films",
@@ -71,7 +71,7 @@ const sections = [
   }
 },
 {
-  position: 5,
+  position: 3,
   component: ProfileTagsVideoGamesComponent,
   props: {
     name: "Jeux vidéos",
@@ -80,7 +80,7 @@ const sections = [
   }
 },
 {
-  position: 6,
+  position: 4,
   component: ProfileTagsSportsComponent,
   props: {
     name: "Sports",
