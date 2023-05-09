@@ -8,7 +8,8 @@ import {
   ProfileTagsVideoGamesComponent, 
   ProfileTagsLangageComponent, 
   ProfileTagsSportsComponent, 
-  ProfileEmptyComponent
+  ProfileEmptyComponent,
+  ProfilePicturesIndicator
 } from '@/components'
 import type { UserComplet } from '@/types';
 import { computed, ref } from 'vue';
@@ -34,7 +35,7 @@ const tags_langage = ["Français", "Franglais"]
     
 const sections = [
 {
-  name: "status",
+  name: "Status",
   position: 1,
   component: ProfileStatusComponent,
   props: {
@@ -46,7 +47,7 @@ const sections = [
   position: 2,
   component: ProfileDescriptionComponnent,
   props: {
-    name: "Déscription",
+    name: "Description",
     user_id: props.user.id,
     user_description: props.user.description ?? ""
   }
@@ -133,6 +134,9 @@ const currentPicture = computed(() => pics.find(item => item.position == current
 <template>
   <div class="card" :id="String(user.id)+'_card'">
     <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/'+currentPicture?.fileName"/>
+    <div class="pictures-indicator">
+      <ProfilePicturesIndicator :position="currentSectionIndex" :total="pics.length"/>
+    </div>
     <div class="button-container">
       <p class="swipe-left center-left" :id="String(user.id)+'_swipe-left'" @click=" posMinus()">&lt;</p>
       <p class="swipe-right center-right" :id="String(user.id)+'_swipe-right'" @click=" posPlus()">&gt;</p>
