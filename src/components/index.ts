@@ -38,6 +38,9 @@ export { default as ParametresMenu } from './parametres/ParametresMenu.vue'
 export { default as PromotionsMenu } from './promotions/PromotionsMenu.vue'
 
 // ICONS
+export { default as IconOnline } from './icons/IconOnline.vue'
+export { default as IconPosition } from './icons/IconPosition.vue'
+export { default as IconMoreInfos } from './icons/IconMoreInfos.vue'
 export { default as IconBoost } from './icons/IconBoost.vue'
 export { default as IconShowBack } from './icons/IconShowBack.vue'
 export { default as IconDislike } from './icons/IconDislike.vue'

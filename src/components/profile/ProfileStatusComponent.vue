@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconHome } from "@/components"
+import { IconHome, IconPosition, IconOnline } from "@/components"
 
 const props = defineProps({
     user_id: {
@@ -16,7 +16,7 @@ const props = defineProps({
 <template>
     <div :id="String(props.user_id)+'_card-one'">
         <div class="svg-container">
-        <IconHome />
+        <IconOnline />
         <span class="svg-text"> En ligne</span>
         </div>
         <div class="svg-container">
@@ -24,7 +24,7 @@ const props = defineProps({
         <span class="svg-text"> Vit ici : {{props.user_city}}</span>
         </div>
         <div class="svg-container">
-        <IconHome />
+        <IconPosition />
         <span class="svg-text"> à 1 km</span>
         </div>
     </div>

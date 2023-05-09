@@ -9,11 +9,13 @@ const users = await getUsers();
 
 <template>
   <div>
-    <ProfileCardShort :user="users[0]" />
-    <LikesOptionBar />
+    <ProfileCardShort :user="users[0]">
+      <LikesOptionBar />
+    </ProfileCardShort>
   </div>
   <div v-for="user in users" :key="user.id" style="display: none;">
-    <ProfileCardShort :user="user" />
-    <LikesOptionBar />
+    <ProfileCardShort :user="user">
+      <LikesOptionBar />
+    </ProfileCardShort>
   </div>
 </template>

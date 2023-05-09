@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { IconHome, ProfileDescriptionComponnent, ProfileStatusComponent, ProfileTagsMusiqueComponent, ProfileTagsMovieComponent, ProfileTagsVideoGamesComponent, ProfileTagsLangageComponent, ProfileTagsSportsComponent } from '@/components'
+import { 
+  IconMoreInfos, 
+  ProfileDescriptionComponnent, 
+  ProfileStatusComponent, 
+  ProfileTagsMusiqueComponent, 
+  ProfileTagsMovieComponent, 
+  ProfileTagsVideoGamesComponent, 
+  ProfileTagsLangageComponent, 
+  ProfileTagsSportsComponent 
+} from '@/components'
 import type { UserComplet } from '@/types';
 import { computed, ref } from 'vue';
 
@@ -107,11 +116,11 @@ const currentSection = computed(() => sections.find(item => item.position == cur
       <p class="swipe-left center-left" :id="String(user.id)+'_swipe-left'" @click=" posMinus()">&lt;</p>
       <p class="swipe-right center-right" :id="String(user.id)+'_swipe-right'" @click=" posPlus()">&gt;</p>
     </div>
-    <div class="svg-container detaille">
-      <router-link :to="{name:'searchDetaille'}"><IconHome /></router-link>
-    </div>
     <div class="card-info">
-      <h2 class="no-padding-margin">{{user.name}}, {{user.age}}</h2>
+      <div class="svg-container detaille">
+        <router-link :to="{name:'searchDetaille'}"><IconMoreInfos /></router-link>
+      </div>
+      <h2 class="no-padding-margin title">{{user.name}}, {{user.age}}</h2>
       <div class="card-container">
 
         <component :is="currentSection!.component" v-bind="currentSection!.props"></component>
@@ -126,9 +135,6 @@ const currentSection = computed(() => sections.find(item => item.position == cur
 
 <style>
 .option-bar {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
   width: 100%;
 }
 </style>
