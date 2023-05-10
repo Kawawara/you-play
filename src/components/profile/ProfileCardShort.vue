@@ -8,11 +8,10 @@ import {
   ProfileTagsVideoGamesComponent,
   ProfileTagsLangageComponent,
   ProfileTagsSportsComponent,
-  ProfileEmptyComponent,
   ProfilePicturesIndicator
 } from '@/components'
 import type { UserComplet } from '@/types';
-import { computed, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useSearch } from '@/services'
 
 const { getPictures } = await useSearch()
@@ -99,14 +98,14 @@ const sections = [
   },
   {
     position: 8,
-    component: ProfileEmptyComponent,
+    component: defineComponent({}),
     props: {
       name: ""
     }
   },
   {
     position: 9,
-    component: ProfileEmptyComponent,
+    component: defineComponent({}),
     props: {
       name: ""
     }
