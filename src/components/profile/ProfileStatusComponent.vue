@@ -8,7 +8,7 @@ const props = defineProps({
     },
     user_city: {
         type: String,
-        required: true
+        required: true,
     }
 });
 </script>

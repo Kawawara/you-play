@@ -24,7 +24,6 @@ const props = defineProps({
 })
 
 const pics = await getPictures(props.user.id)
-console.log(pics)
 
 const tags_musique = ["Techno", "Rap", "Pop", "Jazz", "Latino"]
 const tags_movies = ["Harry Potter", "Back to the Future", "Spider-Man"]
@@ -39,7 +38,7 @@ const sections = [
     component: ProfileStatusComponent,
     props: {
       user_id: props.user.id,
-      user_city: props.user.city
+      user_city: props.user?.city
     }
   },
   {
@@ -132,11 +131,11 @@ function posMinus() {
 
 <template>
   <div class="card" :id="String(user.id) + '_card'">
-    <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + currentPicture?.fileName" />
-    <div class="pictures-indicator">
+    <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (currentPicture?.fileName ?? 'utilisateur1.png')" />
+    <div class="pictures-indicator" v-if="pics.length > 0">
       <ProfilePicturesIndicator :position="currentSectionIndex" :total="pics.length" />
     </div>
-    <div class="button-container">
+    <div class="button-container" v-if="pics.length > 0">
       <p class="swipe-left center-left" :id="String(user.id) + '_swipe-left'" @click=" posMinus()">&lt;</p>
       <p class="swipe-right center-right" :id="String(user.id) + '_swipe-right'" @click=" posPlus()">&gt;</p>
     </div>
