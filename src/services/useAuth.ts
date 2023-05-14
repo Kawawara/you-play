@@ -55,7 +55,7 @@ if(user.value && user.value.status == 0){
         const response = await Axios.get(`users/${payload.value?.id}/`)
 
         if (response.status !== 200) throw new Error(`Error while fetching user with id: ${payload.value?.id}`)
-        const data = response.data.data
+        const data = response.data.data[0]
 
         const fetchedUser: User = { 
           id: data.id,

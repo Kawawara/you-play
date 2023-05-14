@@ -7,7 +7,7 @@ export type Conv = {
     nameLastMessage: string
     contentLastMessage : string
     timeLastMessage: string
-}
+} & Iterable<Conv>;
 
 export type Message = {
     id: number
@@ -15,4 +15,4 @@ export type Message = {
     idUser: number
     content: string
     created_at: Date
-}
+} & Iterable<Message>;
