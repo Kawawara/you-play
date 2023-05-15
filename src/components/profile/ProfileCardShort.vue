@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   IconMoreInfos,
+  ProfileCardDetailledComponent,
   ProfileDescriptionComponnent,
   ProfileStatusComponent,
   ProfileTagsMusiqueComponent,
@@ -115,6 +116,8 @@ const currentSectionIndex = ref(1)
 const currentSection = computed(() => sections.find(item => item.position == currentSectionIndex.value))
 const currentPicture = computed(() => pics.find(item => item.position == currentSectionIndex.value))
 
+const detailView = ref(false)
+
 
 function posPlus() {
   if (currentSectionIndex.value < pics.length) {
@@ -130,25 +133,26 @@ function posMinus() {
 </script>
 
 <template>
-  <div class="card" :id="String(user.id) + '_card'">
+  <div class="card" :class="{'card-detailed' : detailView}">
     <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (currentPicture?.fileName ?? 'utilisateur1.png')" />
     <div class="pictures-indicator" v-if="pics.length > 0">
       <ProfilePicturesIndicator :position="currentSectionIndex" :total="pics.length" />
     </div>
     <div class="button-container" v-if="pics.length > 0">
-      <p class="swipe-left center-left" :id="String(user.id) + '_swipe-left'" @click=" posMinus()">&lt;</p>
-      <p class="swipe-right center-right" :id="String(user.id) + '_swipe-right'" @click=" posPlus()">&gt;</p>
+      <p class="swipe-left center-left" @click=" posMinus()">&lt;</p>
+      <p class="swipe-right center-right" @click=" posPlus()">&gt;</p>
     </div>
     <div class="card-info">
       <div class="svg-container detaille">
-        <router-link :to="{ name: 'searchDetaille' }">
-          <IconMoreInfos />
-        </router-link>
+        <div>
+          <IconMoreInfos @click="() => {detailView = !detailView}" />
+        </div>
       </div>
       <h2 class="no-padding-margin title">{{ user.name }}, {{ user.age }}</h2>
       <div class="card-container">
 
-        <component :is="currentSection!.component" v-bind="currentSection!.props"></component>
+        <component v-if="detailView" :is="ProfileCardDetailledComponent" :user="props.user"></component>
+        <component :is="currentSection!.component" v-bind="currentSection!.props" v-if="!detailView"></component>
 
       </div>
       <div class="option-bar">
