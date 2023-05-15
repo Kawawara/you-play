@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ProfileCardShort, LikesOptionBar } from '@/components'
+import { ProfileCard, LikesOptionBar } from '@/components'
 import { useActions } from '@/services';
 import type { User } from '@/types';
 
@@ -17,8 +17,8 @@ const props = defineProps({
 
 <template>
   <div>
-    <ProfileCardShort :user="users[0]">
+    <ProfileCard :user="users[0]">
       <LikesOptionBar :connectedUser="user" :otherUser="users[0]"/>
-    </ProfileCardShort>
+    </ProfileCard>
   </div>
 </template>

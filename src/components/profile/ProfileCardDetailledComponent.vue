@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import {
-  ProfileCardDetailledComponent,
   ProfileDescriptionComponnent,
   ProfileStatusComponent,
   ProfileTagsMusiqueComponent,
   ProfileTagsMovieComponent,
   ProfileTagsVideoGamesComponent,
   ProfileTagsLangageComponent,
-  ProfileTagsSportsComponent,
-  ProfilePicturesIndicator
+  ProfileTagsSportsComponent
 } from '@/components'
 import type { UserComplet } from '@/types';
 
@@ -18,9 +16,28 @@ const props = defineProps({
         required : true
     }
 })
+const tags_musique = ["Techno", "Rap", "Pop", "Jazz", "Latino"]
+const tags_movies = ["Harry Potter", "Back to the Future", "Spider-Man"]
+const tags_video_games = ["R6S", "FIFA", "Super Mario", "Poker"]
+const tags_sports = ["Kayak", "Badminton", "MMA"]
+const tags_langage = ["Français", "Franglais"]
+
 console.log(props.user)
 </script>
 
 <template>
+  <ProfileStatusComponent :user_id="props.user.id" :user_city="props.user.city"/>
+  <br>
+  <ProfileDescriptionComponnent :user_id="props.user.id" :user_description="props.user.description" :name="'Déscription'"/>
+  <br>
+  <ProfileTagsVideoGamesComponent :user_id="props.user.id" :tags="tags_video_games" :name="'Jeux vidéos'"/>
+
+  <ProfileTagsSportsComponent :user_id="props.user.id" :tags="tags_sports" :name="'Sports'"/>
+
+  <ProfileTagsMusiqueComponent :user_id="props.user.id" :tags="tags_musique" :name="'Musique'"/>
+
+  <ProfileTagsMovieComponent :user_id="props.user.id" :tags="tags_movies" :name="'Films'"/>
+
+  <ProfileTagsLangageComponent :user_id="props.user.id" :tags="tags_langage" :name="'Langues'"/>
 
 </template>

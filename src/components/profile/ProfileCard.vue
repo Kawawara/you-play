@@ -133,30 +133,37 @@ function posMinus() {
 </script>
 
 <template>
-  <div class="card" :class="{'card-detailed' : detailView}">
-    <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (currentPicture?.fileName ?? 'utilisateur1.png')" />
-    <div class="pictures-indicator" v-if="pics.length > 0">
-      <ProfilePicturesIndicator :position="currentSectionIndex" :total="pics.length" />
-    </div>
-    <div class="button-container" v-if="pics.length > 0">
-      <p class="swipe-left center-left" @click=" posMinus()">&lt;</p>
-      <p class="swipe-right center-right" @click=" posPlus()">&gt;</p>
-    </div>
-    <div class="card-info">
-      <div class="svg-container detaille">
-        <div>
-          <IconMoreInfos @click="() => {detailView = !detailView}" />
+  <div class="card" :class="{'card-detailed overflow-hidden' : detailView}">
+    <div :class="{'w-full h-full' : detailView, 'h-full': !detailView}">
+      <div :class="{' scroll-without-scrollbar' : detailView, 'h-full': !detailView}">
+        <div class="relative">
+          <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (currentPicture?.fileName ?? 'utilisateur1.png')" />
+          <div class="pictures-indicator" v-if="pics.length > 0">
+            <ProfilePicturesIndicator :position="currentSectionIndex" :total="pics.length" />
+          </div>
+          <div class="button-container" v-if="pics.length > 0">
+            <p class="swipe-left center-left" @click=" posMinus()">&lt;</p>
+            <p class="swipe-right center-right" @click=" posPlus()">&gt;</p>
+          </div>
         </div>
-      </div>
-      <h2 class="no-padding-margin title">{{ user.name }}, {{ user.age }}</h2>
-      <div class="card-container">
-
-        <component v-if="detailView" :is="ProfileCardDetailledComponent" :user="props.user"></component>
-        <component :is="currentSection!.component" v-bind="currentSection!.props" v-if="!detailView"></component>
-
-      </div>
-      <div class="option-bar">
-        <slot></slot>
+        
+        <div :class="{'card-info ': !detailView, ' p-2 card-info-detailled': detailView}">
+          <div class="flex justify-between">
+            <h2 class="no-padding-margin title">{{ user.name }}, {{ user.age }}</h2>
+            <div class="svg-container detaille" @click="() => {detailView = !detailView}">
+              <IconMoreInfos />
+            </div>
+          </div>
+          <div class="card-container">
+            
+            <component v-if="detailView" :is="ProfileCardDetailledComponent" :user="props.user"></component>
+            <component :is="currentSection!.component" v-bind="currentSection!.props" v-if="!detailView"></component>
+            
+          </div>
+          <div class="option-bar">
+            <slot></slot>
+          </div>
+        </div>
       </div>
     </div>
   </div>

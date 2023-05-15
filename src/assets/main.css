@@ -43,15 +43,23 @@ body {
 
 
 .detaille{
-    position: absolute;
-    top: 5%;
-    right: 3%;
     cursor: pointer;
+    z-index: 500;
 }
 
 .detaille-icon {
   height: 20px;
   width: auto;
+}
+
+.card-container {
+  font-size: small;
+}
+
+.scroll-without-scrollbar {
+  height: 100%;
+  overflow-y: scroll;
+  width: calc(100% + 16px);
 }
 
 .no-padding-margin{
@@ -87,12 +95,18 @@ body {
     width: 100%;
     height: fit-content;
     font-family: 'Open sans', sans-serif;
+  }
+  
+  .card-info-detailled {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-family: 'Open sans', sans-serif;
 }
 
 .button-container {
   position: absolute;
-  height: 100%;
   width: 100%;
+  top: 50%;
   display: flex;
   justify-content: space-between;
 }
@@ -123,12 +137,14 @@ body {
   background: rgba(0, 0, 0, 0);
 }
 
-.card-info h2 {
-    margin: 0;
-    font-size: 1.5rem;
+.card-info h2,
+.card-info-detailled h2 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
-.card-info p {
+.card-info p ,
+.card-info-detailled h2 {
     margin: 0;
 }
 
