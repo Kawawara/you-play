@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AppLayout, ParametresMenu, ProfileCardShort, PromotionsMenu } from '@/components';
+import { AppLayout, ParametresMenu, ProfileCard, PromotionsMenu } from '@/components';
 import { useAuth, useSearch } from '@/services'
 import { useRouter } from 'vue-router'
 
@@ -36,7 +36,7 @@ const User = await getUser(user.value.id)
 <template>
   <AppLayout :tabs="tabs" :profile="true">
 
-    <ProfileCardShort :user="User"></ProfileCardShort>
+    <ProfileCard :user="User"></ProfileCard>
 
   </AppLayout>
 </template>
