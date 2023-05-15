@@ -116,12 +116,16 @@ const useActions =  async() =>
         });
         if (match || lastAction.value?.action == Actions.SUPERLIKE) {
             toast.success("Nouveau match")
-            const value = await renderOverlay(MatchOverlay, {
+            renderOverlay(MatchOverlay, {
                 title: 'Nouveau match',
                 visible: true,
                 data: data
+            }).then(() => {
+                console.log("redirect to message")
+                // TODO redirect to chat
+            }).catch((err) => {
+                // do nothing, continu browsing
             })
-            console.log(value)
         }
     }
 
