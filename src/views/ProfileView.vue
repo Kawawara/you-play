@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import TheProfile from '../components/TheProfileWelcome.vue'
-import { AppLayout, LikesMenu, MessagesMenu, ParametresMenu, PromotionsMenu } from '@/components';
-import { useAuth } from '@/services'
+import { AppLayout, ParametresMenu, ProfileCardShort, PromotionsMenu } from '@/components';
+import { useAuth, useSearch } from '@/services'
 import { useRouter } from 'vue-router'
 
-const {user} = await useAuth();
+const { user } = await useAuth();
+const { getUser } = await useSearch()
 
 var logedIn = false
 if (user?.value) {
-  logedIn=true
+  logedIn = true
 }
 if (!logedIn) {
   const router = useRouter()
@@ -20,22 +20,23 @@ const tabs = [
     name: 'Promotions',
     label: 'Promotions',
     component: PromotionsMenu,
-    props: {    }
+    props: {}
   },
   {
     name: 'Paramètres',
     label: 'Paramètres',
     component: ParametresMenu,
-    props: {    }
+    props: {}
   }
 ]
 
+const User = await getUser(user.value.id)
 </script>
 
 <template>
-    <AppLayout :tabs="tabs"  :profile="true">
+  <AppLayout :tabs="tabs" :profile="true">
 
-      <TheProfile></TheProfile>
+    <ProfileCardShort :user="User"></ProfileCardShort>
 
-    </AppLayout>
+  </AppLayout>
 </template>
