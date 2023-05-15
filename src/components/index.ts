@@ -39,6 +39,9 @@ export { default as ParametresMenu } from './parametres/ParametresMenu.vue'
 // Messages
 export { default as PromotionsMenu } from './promotions/PromotionsMenu.vue'
 
+// Overlays
+export { default as MatchOverlay } from './overlays/MatchOverlay.vue'
+
 // ICONS
 export { default as IconOnline } from './icons/IconOnline.vue'
 export { default as IconPosition } from './icons/IconPosition.vue'

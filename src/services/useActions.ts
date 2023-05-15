@@ -2,6 +2,8 @@ import { useToast } from "vue-toastification"
 import { useAxios, useSearch } from '@/services'
 import { ref } from "vue"
 import type { UserComplet } from "@/types"
+import { MatchOverlay } from "@/components"
+import { renderOverlay } from '@overlays/vue'
 
 const toast = useToast()
 const { Axios } = useAxios()
@@ -28,10 +30,10 @@ const useActions =  async() =>
         if (response.status == 200) {
             const res = response.data.data
             if (res.length > 1 && Array.isArray(res)) {
-                toast.success("Nouveau match")
                 saveLastAction(Actions.LIKE, res[0].id)
             }
             saveLastAction(Actions.LIKE, res.id)
+            checkMatch(res)
             nextUser()
         } else {
             toast.error("Une erreur c'est produite")
@@ -57,7 +59,8 @@ const useActions =  async() =>
         }
         const response = await Axios.post(`superLikes/`, data)
         if (response.status == 200) {
-            toast.success("Nouveau match")
+            saveLastAction(Actions.SUPERLIKE, response.data.data.id)
+            checkMatch(response.data.data)
             nextUser()
         } else {
             toast.error("Une erreur c'est produite")
@@ -96,13 +99,30 @@ const useActions =  async() =>
         }
     }
     const nextUser = () => {
-        // pop the user of the list of users we have in SearchComponent
         lastUser.value = users.value.shift()
     }
     const previousUser = () => {
         if (lastUser.value != undefined) {
             users.value.unshift(lastUser.value)
             lastUser.value = undefined
+        }
+    }
+    const checkMatch = async(data :any) => {
+        console.log(data)
+        let match = false
+        data.forEach((element: any)  => {
+            if (element.hasOwnProperty('idUser2') ) {
+                match = true
+            }
+        });
+        if (match || lastAction.value?.action == Actions.SUPERLIKE) {
+            toast.success("Nouveau match")
+            const value = await renderOverlay(MatchOverlay, {
+                title: 'Nouveau match',
+                visible: true,
+                data: data
+            })
+            console.log(value)
         }
     }
 
