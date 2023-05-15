@@ -22,7 +22,6 @@ const tags_video_games = ["R6S", "FIFA", "Super Mario", "Poker"]
 const tags_sports = ["Kayak", "Badminton", "MMA"]
 const tags_langage = ["Français", "Franglais"]
 
-console.log(props.user)
 </script>
 
 <template>

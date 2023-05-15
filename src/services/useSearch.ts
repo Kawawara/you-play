@@ -8,7 +8,6 @@ const useSearch =  async() =>
     const getUsers = async() => {
     
         const response = await Axios.get(`users/`)
-        console.log(response.data.data)
         return response.data.data as [UserComplet]
     }
     const getUser = async(id :Number) => {

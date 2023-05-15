@@ -108,7 +108,6 @@ const useActions =  async() =>
         }
     }
     const checkMatch = async(data :any) => {
-        console.log(data)
         let match = false
         data.forEach((element: any)  => {
             if (element.hasOwnProperty('idUser2') ) {

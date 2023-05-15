@@ -36,7 +36,6 @@
     }
 
     function swipeRight(event: MouseEvent) {
-        console.log("hey");
         currentPhotoIndex++;
         if (currentPhotoIndex > photos.length - 1) {
             currentPhotoIndex = 0;
