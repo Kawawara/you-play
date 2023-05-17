@@ -2,6 +2,7 @@
 import {
   IconMoreInfos,
   ProfileCardDetailledComponent,
+  ProfileCardModificationComponent,
   ProfileDescriptionComponnent,
   ProfileStatusComponent,
   ProfileTagsMusiqueComponent,
@@ -10,7 +11,8 @@ import {
   ProfileTagsLangageComponent,
   ProfileTagsSportsComponent,
   ProfilePicturesIndicator,
-  LikesOptionBar
+  LikesOptionBar,
+  IconSetting
 } from '@/components'
 import type { UserComplet, User } from '@/types';
 import { computed, defineComponent, ref } from 'vue';
@@ -24,12 +26,12 @@ const props = defineProps({
     required: true,
   },
   user: {
-    type: Object as () => User,
+    type: Object as () => UserComplet,
     required: true,
   }
 })
 
-const pics = await getPictures(props.otherUser.id)
+const pics = await getPictures(props.otherUser.id ?? props.user.id)
 
 const tags_musique = ["Techno", "Rap", "Pop", "Jazz", "Latino"]
 const tags_movies = ["Harry Potter", "Back to the Future", "Spider-Man"]
@@ -123,6 +125,13 @@ const currentPicture = computed(() => pics.find(item => item.position == current
 
 const detailView = ref(false)
 
+let isMyProfile = false
+if (props.user.id === props.otherUser.id) {
+  isMyProfile = true
+}
+
+const profileModification = ref(false)
+
 
 function posPlus() {
   if (currentSectionIndex.value < pics.length) {
@@ -138,35 +147,37 @@ function posMinus() {
 </script>
 
 <template>
-  <div class="card" :class="{'card-detailed overflow-hidden' : detailView}">
-    <div :class="{'w-full h-full' : detailView, 'h-full': !detailView}">
-      <div :class="{' scroll-without-scrollbar' : detailView, 'h-full': !detailView}">
+  <div class="card" :class="{'card-detailed overflow-hidden' : detailView||profileModification}">
+    <div :class="{'w-full h-full' : detailView||profileModification, 'h-full': !detailView&&!profileModification}">
+      <div :class="{' scroll-without-scrollbar' : detailView||profileModification, 'h-full': !detailView&&!profileModification}">
         <div class="relative">
           <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (currentPicture?.fileName ?? 'utilisateur1.png')" />
           <div class="pictures-indicator" v-if="pics.length > 0">
             <ProfilePicturesIndicator :position="currentSectionIndex" :total="pics.length" />
           </div>
+          <IconSetting v-if="isMyProfile" class="setting-icon" @click="() => {profileModification = !profileModification}"/>
           <div class="button-container" v-if="pics.length > 0">
             <p class="swipe-left center-left" @click=" posMinus()">&lt;</p>
             <p class="swipe-right center-right" @click=" posPlus()">&gt;</p>
           </div>
         </div>
         
-        <div :class="{'card-info ': !detailView, ' p-2 card-info-detailled': detailView}">
+        <div :class="{'card-info ': !detailView&&!profileModification, ' p-2 card-info-detailled': detailView||profileModification}">
           <div class="flex justify-between">
             <h2 class="no-padding-margin title">{{ otherUser.name }}, {{ otherUser.age }}</h2>
-            <div class="svg-container detaille" @click="() => {detailView = !detailView}">
+            <div v-if="!profileModification" class="svg-container detaille" @click="() => {detailView = !detailView}">
               <IconMoreInfos />
             </div>
           </div>
-          <div class="card-container">
-            
+          <div class="card-container" v-if="!profileModification">
             <component v-if="detailView" :is="ProfileCardDetailledComponent" :user="props.otherUser"></component>
-            <component :is="currentSection!.component" v-bind="currentSection!.props" v-if="!detailView"></component>
-            
+            <component v-if="!detailView" :is="currentSection!.component" v-bind="currentSection!.props"></component>
+          </div>
+          <div class="card-container" v-if="profileModification">
+            <ProfileCardModificationComponent :user="props.user"/>
           </div>
           <div class="option-bar">
-            <LikesOptionBar :connectedUser="user" :otherUser="props.otherUser" :otherUserProfilePic="pics[0]"/>
+            <LikesOptionBar v-if="!isMyProfile" :connectedUser="user" :otherUser="props.otherUser" :otherUserProfilePic="pics[0]"/>
           </div>
         </div>
       </div>
@@ -177,5 +188,11 @@ function posMinus() {
 <style>
 .option-bar {
   width: 100%;
+}
+.setting-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
 }
 </style>

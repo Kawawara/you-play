@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ProfileCard, LikesOptionBar } from '@/components'
 import { useActions } from '@/services';
-import type { User } from '@/types';
+import type { UserComplet } from '@/types';
 
 
 const { users } = await useActions()
 
 const props = defineProps({
   user: {
-    type: Object as () => User,
+    type: Object as () => UserComplet,
     required: true,
   }
 })

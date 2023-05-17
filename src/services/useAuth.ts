@@ -1,10 +1,10 @@
 import { ref } from "vue"
-import type { User } from '@/types'
+import type { User, UserComplet } from '@/types'
 import { useAxios, useJWT } from '@/services'
 import { useToast } from "vue-toastification"
 
-const user = ref<User | any>()
-let allUsers = <User | any>[]
+const user = ref<UserComplet | any>()
+let allUsers = <UserComplet | any>[]
 const toast = useToast()
 
 const useAuth = async () => {
@@ -59,11 +59,7 @@ if(user.value && user.value.status == 0){
         const userData = data[0]
         const pictures = data[1]
 
-        const fetchedUser: User = { 
-          id: userData.id,
-          username: userData.name,
-          email: userData.email
-        }
+        const fetchedUser: UserComplet = userData
         user.value = fetchedUser
         return true
       } catch(e) {
