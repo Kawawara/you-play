@@ -1,7 +1,7 @@
 import { useToast } from "vue-toastification"
 import { useAxios, useSearch } from '@/services'
 import { ref } from "vue"
-import type { UserComplet } from "@/types"
+import type { Picture, UserComplet } from "@/types"
 import { MatchOverlay } from "@/components"
 import { renderOverlay } from '@overlays/vue'
 
@@ -21,7 +21,7 @@ const lastUser = ref<UserComplet>()
 
 const useActions =  async() =>
 {
-    const postLike = async(userid: Number, likedId :Number) => {
+    const postLike = async(userid: Number, likedId :Number, likedUser :UserComplet, profilePic :Picture) => {
         const data = {
             idUserWhoLiked   : userid,
             idUserWhoBeLiked : likedId
@@ -33,7 +33,7 @@ const useActions =  async() =>
                 saveLastAction(Actions.LIKE, res[0].id)
             }
             saveLastAction(Actions.LIKE, res.id)
-            checkMatch(res)
+            checkMatch(res, likedUser, profilePic)
             nextUser()
         } else {
             toast.error("Une erreur c'est produite")
@@ -52,7 +52,7 @@ const useActions =  async() =>
             toast.error("Une erreur c'est produite")
         }
     }
-    const postSuperlike = async(userid: Number, likedId :Number) => {
+    const postSuperlike = async(userid: Number, likedId :Number, likedUser :UserComplet, profilePic :Picture) => {
         const data = {
             idUserWhoLiked   : userid,
             idUserWhoBeLiked : likedId
@@ -60,7 +60,7 @@ const useActions =  async() =>
         const response = await Axios.post(`superLikes/`, data)
         if (response.status == 200) {
             saveLastAction(Actions.SUPERLIKE, response.data.data.id)
-            checkMatch(response.data.data)
+            checkMatch(response.data.data, likedUser, profilePic)
             nextUser()
         } else {
             toast.error("Une erreur c'est produite")
@@ -107,7 +107,7 @@ const useActions =  async() =>
             lastUser.value = undefined
         }
     }
-    const checkMatch = async(data :any) => {
+    const checkMatch = async(data :any, likedUser :UserComplet, profilePic :Picture) => {
         let match = false
         data.forEach((element: any)  => {
             if (element.hasOwnProperty('idUser2') ) {
@@ -119,7 +119,9 @@ const useActions =  async() =>
             renderOverlay(MatchOverlay, {
                 title: 'Nouveau match',
                 visible: true,
-                data: data
+                data: data,
+                likedUser,
+                profilePic
             }).then(() => {
                 console.log("redirect to message")
                 // TODO redirect to chat

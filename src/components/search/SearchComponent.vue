@@ -17,8 +17,8 @@ const props = defineProps({
 
 <template>
   <div>
-    <ProfileCard :user="users[0]">
-      <LikesOptionBar :connectedUser="user" :otherUser="users[0]"/>
+    <ProfileCard :otherUser="users[0]" :user="props.user">
+      
     </ProfileCard>
   </div>
 </template>

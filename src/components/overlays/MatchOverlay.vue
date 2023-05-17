@@ -1,25 +1,41 @@
 <script setup lang="ts">
     import { useOverlay } from '@overlays/vue'
+    import { IconDislike } from '@/components'
+    import type { Picture, UserComplet } from '@/types'
     const props = defineProps({
         title: String,
         visible: Boolean,
         data: Object as any,
+        likedUser: {
+            type: Object as () => UserComplet,
+            required: true
+        },
+        profilePic: {
+            type: Object as () => Picture,
+            required: true
+        }
+        
     })
 
     const { visible, resolve, reject } = useOverlay({})
-    console.log("modal datas")
-    console.log(props.data)
 </script>
 
 <template>
   <div v-if="visible" class="match-overlay">
     <div class="match-overlay-content card p-2">
-        <h2>
-            {{ title }}
-        </h2>
+        <div class="spaced-content">
+            <h2>{{ title }}</h2>
+            <div class="close-button-modal">
+                <IconDislike @click="reject(`${title}:confirmed`)" />
+            </div>
+        </div>
         <div>
-            <button @click="resolve(`${title}:confirmed`)" class="btn m-1">Confirmer</button>
-            <button @click="reject(`${title}:confirmed`)" class="btn m-1">Annuler</button>
+            <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (profilePic?.fileName ?? 'utilisateur1.png')" />
+            <h2 class="no-padding-margin title">{{ likedUser.name }}, {{ likedUser.age }}</h2>
+        </div>
+        <div class="spaced-content">
+            <button @click="resolve(`${title}:confirmed`)" class="btn btn-primary m-1 p-1">Envoyer un message</button>
+            <button @click="reject(`${title}:confirmed`)" class="btn m-1 p-1">Continuer de naviguer</button>
         </div>
     </div>
   </div>
@@ -45,5 +61,14 @@ div:has(> div.match-overlay) {
     width: fit-content;
     height: fit-content;
     background-color: azure;
+}
+.match-overlay-content > .spaced-content{
+    display: flex;
+    justify-content: space-between;
+}
+.close-button-modal {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
 }
 </style>
