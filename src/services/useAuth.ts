@@ -65,7 +65,6 @@ if(user.value && user.value.status == 0){
           email: userData.email
         }
         user.value = fetchedUser
-        console.log(user)
         return true
       } catch(e) {
         console.error(e)
@@ -123,7 +122,6 @@ if(user.value && user.value.status == 0){
     if (token) toast.success('Successful connection')
 
     await setUser()
-    // console.log(response)
     return toast.success('Your registration is done, log in!')
   }
 

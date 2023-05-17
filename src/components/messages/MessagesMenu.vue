@@ -3,7 +3,6 @@ import { useAuth } from '@/services';
 
 const {user} = await useAuth();
 
-console.log(user)
 </script>
 
 <template>

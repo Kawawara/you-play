@@ -1,7 +1,9 @@
 import { useToast } from "vue-toastification"
 import { useAxios, useSearch } from '@/services'
 import { ref } from "vue"
-import type { UserComplet } from "@/types"
+import type { Picture, UserComplet } from "@/types"
+import { MatchOverlay } from "@/components"
+import { renderOverlay } from '@overlays/vue'
 
 const toast = useToast()
 const { Axios } = useAxios()
@@ -19,7 +21,7 @@ const lastUser = ref<UserComplet>()
 
 const useActions =  async() =>
 {
-    const postLike = async(userid: Number, likedId :Number) => {
+    const postLike = async(userid: Number, likedId :Number, likedUser :UserComplet, profilePic :Picture) => {
         const data = {
             idUserWhoLiked   : userid,
             idUserWhoBeLiked : likedId
@@ -28,10 +30,10 @@ const useActions =  async() =>
         if (response.status == 200) {
             const res = response.data.data
             if (res.length > 1 && Array.isArray(res)) {
-                toast.success("Nouveau match")
                 saveLastAction(Actions.LIKE, res[0].id)
             }
             saveLastAction(Actions.LIKE, res.id)
+            checkMatch(res, likedUser, profilePic)
             nextUser()
         } else {
             toast.error("Une erreur c'est produite")
@@ -50,14 +52,15 @@ const useActions =  async() =>
             toast.error("Une erreur c'est produite")
         }
     }
-    const postSuperlike = async(userid: Number, likedId :Number) => {
+    const postSuperlike = async(userid: Number, likedId :Number, likedUser :UserComplet, profilePic :Picture) => {
         const data = {
             idUserWhoLiked   : userid,
             idUserWhoBeLiked : likedId
         }
         const response = await Axios.post(`superLikes/`, data)
         if (response.status == 200) {
-            toast.success("Nouveau match")
+            saveLastAction(Actions.SUPERLIKE, response.data.data.id)
+            checkMatch(response.data.data, likedUser, profilePic)
             nextUser()
         } else {
             toast.error("Une erreur c'est produite")
@@ -96,13 +99,35 @@ const useActions =  async() =>
         }
     }
     const nextUser = () => {
-        // pop the user of the list of users we have in SearchComponent
         lastUser.value = users.value.shift()
     }
     const previousUser = () => {
         if (lastUser.value != undefined) {
             users.value.unshift(lastUser.value)
             lastUser.value = undefined
+        }
+    }
+    const checkMatch = async(data :any, likedUser :UserComplet, profilePic :Picture) => {
+        let match = false
+        data.forEach((element: any)  => {
+            if (element.hasOwnProperty('idUser2') ) {
+                match = true
+            }
+        });
+        if (match || lastAction.value?.action == Actions.SUPERLIKE) {
+            toast.success("Nouveau match")
+            renderOverlay(MatchOverlay, {
+                title: 'Nouveau match',
+                visible: true,
+                data: data,
+                likedUser,
+                profilePic
+            }).then(() => {
+                console.log("redirect to message")
+                // TODO redirect to chat
+            }).catch((err) => {
+                // do nothing, continu browsing
+            })
         }
     }
 

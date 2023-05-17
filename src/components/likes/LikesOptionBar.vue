@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { IconLike, IconDislike, IconShowBack, IconBoost, IconSuperLike } from '@/components';
-import type { User, UserComplet } from '@/types';
+import type { Picture, User, UserComplet } from '@/types';
 import { useActions } from "@/services";
 
 const props = defineProps({
@@ -12,6 +12,10 @@ const props = defineProps({
         type: Object as () => UserComplet,
         required: true,
     },
+    otherUserProfilePic : {
+        type: Object as () => Picture,
+        required: true
+    }
 })
 
 const { postLike, postDislike, postSuperlike, goback } = await useActions()
@@ -26,8 +30,8 @@ const { postLike, postDislike, postSuperlike, goback } = await useActions()
 
         <div class="like-bar-button"><IconShowBack class="like-bar-item" @click="goback(props.connectedUser.id, props.otherUser.id)"/></div>
         <div class="like-bar-button"><IconDislike class="like-bar-item" @click="postDislike(props.connectedUser.id, props.otherUser.id)"/></div>
-        <div class="like-bar-button"><IconSuperLike class="like-bar-item" @click="postSuperlike(props.connectedUser.id, props.otherUser.id)"/></div>
-        <div class="like-bar-button"><IconLike class="like-bar-item" @click="postLike(props.connectedUser.id, props.otherUser.id)"/></div>
+        <div class="like-bar-button"><IconSuperLike class="like-bar-item" @click="postSuperlike(props.connectedUser.id, props.otherUser.id, props.otherUser, props.otherUserProfilePic)"/></div>
+        <div class="like-bar-button"><IconLike class="like-bar-item" @click="postLike(props.connectedUser.id, props.otherUser.id, props.otherUser, props.otherUserProfilePic)"/></div>
         <div class="like-bar-button"><IconBoost class="like-bar-item" /></div>
 
         <div></div>

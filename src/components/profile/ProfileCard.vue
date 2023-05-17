@@ -9,22 +9,27 @@ import {
   ProfileTagsVideoGamesComponent,
   ProfileTagsLangageComponent,
   ProfileTagsSportsComponent,
-  ProfilePicturesIndicator
+  ProfilePicturesIndicator,
+  LikesOptionBar
 } from '@/components'
-import type { UserComplet } from '@/types';
+import type { UserComplet, User } from '@/types';
 import { computed, defineComponent, ref } from 'vue';
 import { useSearch } from '@/services'
 
 const { getPictures } = await useSearch()
 
 const props = defineProps({
-  user: {
+  otherUser: {
     type: Object as () => UserComplet,
+    required: true,
+  },
+  user: {
+    type: Object as () => User,
     required: true,
   }
 })
 
-const pics = await getPictures(props.user.id)
+const pics = await getPictures(props.otherUser.id)
 
 const tags_musique = ["Techno", "Rap", "Pop", "Jazz", "Latino"]
 const tags_movies = ["Harry Potter", "Back to the Future", "Spider-Man"]
@@ -38,8 +43,8 @@ const sections = [
     position: 1,
     component: ProfileStatusComponent,
     props: {
-      user_id: props.user.id,
-      user_city: props.user?.city
+      user_id: props.otherUser.id,
+      user_city: props.otherUser?.city
     }
   },
   {
@@ -47,8 +52,8 @@ const sections = [
     component: ProfileDescriptionComponnent,
     props: {
       name: "Description",
-      user_id: props.user.id,
-      user_description: props.user.description ?? ""
+      user_id: props.otherUser.id,
+      user_description: props.otherUser.description ?? ""
     }
   },
   {
@@ -56,7 +61,7 @@ const sections = [
     component: ProfileTagsMusiqueComponent,
     props: {
       name: "Musiques",
-      user_id: props.user.id,
+      user_id: props.otherUser.id,
       tags: tags_musique
     }
   },
@@ -65,7 +70,7 @@ const sections = [
     component: ProfileTagsMovieComponent,
     props: {
       name: "Films",
-      user_id: props.user.id,
+      user_id: props.otherUser.id,
       tags: tags_movies
     }
   },
@@ -74,7 +79,7 @@ const sections = [
     component: ProfileTagsVideoGamesComponent,
     props: {
       name: "Jeux vidéos",
-      user_id: props.user.id,
+      user_id: props.otherUser.id,
       tags: tags_video_games
     }
   },
@@ -83,7 +88,7 @@ const sections = [
     component: ProfileTagsSportsComponent,
     props: {
       name: "Sports",
-      user_id: props.user.id,
+      user_id: props.otherUser.id,
       tags: tags_sports
     }
   },
@@ -92,7 +97,7 @@ const sections = [
     component: ProfileTagsLangageComponent,
     props: {
       name: "Langues",
-      user_id: props.user.id,
+      user_id: props.otherUser.id,
       tags: tags_langage
     }
   },
@@ -149,19 +154,19 @@ function posMinus() {
         
         <div :class="{'card-info ': !detailView, ' p-2 card-info-detailled': detailView}">
           <div class="flex justify-between">
-            <h2 class="no-padding-margin title">{{ user.name }}, {{ user.age }}</h2>
+            <h2 class="no-padding-margin title">{{ otherUser.name }}, {{ otherUser.age }}</h2>
             <div class="svg-container detaille" @click="() => {detailView = !detailView}">
               <IconMoreInfos />
             </div>
           </div>
           <div class="card-container">
             
-            <component v-if="detailView" :is="ProfileCardDetailledComponent" :user="props.user"></component>
+            <component v-if="detailView" :is="ProfileCardDetailledComponent" :user="props.otherUser"></component>
             <component :is="currentSection!.component" v-bind="currentSection!.props" v-if="!detailView"></component>
             
           </div>
           <div class="option-bar">
-            <slot></slot>
+            <LikesOptionBar :connectedUser="user" :otherUser="props.otherUser" :otherUserProfilePic="pics[0]"/>
           </div>
         </div>
       </div>
