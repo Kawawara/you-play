@@ -172,7 +172,7 @@ function updateUser() {
         <div v-if="profileModification" class="relative">
           <IconSetting v-if="isMyProfile" class="setting-icon" @click="() => {profileModification = !profileModification}"/>
           <div class="profile-picture-modification">
-            <ProfilePictureModification v-for="section in sections" :key="section.position" :position="section.position"/>
+            <ProfilePictureModification v-for="section in sections" :key="section.position" :position="section.position" :picture="pics[section.position -1]"/>
           </div>
         </div>
 
