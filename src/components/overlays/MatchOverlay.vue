@@ -66,9 +66,4 @@ div:has(> div.match-overlay) {
     display: flex;
     justify-content: space-between;
 }
-.close-button-modal {
-    height: 20px;
-    width: 20px;
-    cursor: pointer;
-}
 </style>
