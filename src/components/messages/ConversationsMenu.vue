@@ -60,7 +60,7 @@ for (const conv of convs[0]) {
 }
 
 .link {
-    @apply block items-center w-full no-underline text-indigo-950
+    @apply block items-center w-full no-underline outline-none text-indigo-950
 }
 
 .link:hover {

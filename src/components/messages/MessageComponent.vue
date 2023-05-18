@@ -83,103 +83,50 @@ onBeforeRouteUpdate(beforeRouteUpdate);
 
 <style type="text/css">
 .container {
-    font-family: 'Prosto One', sans-serif;
-    background-color: #f0f0f0;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    @apply bg-gray-200 max-w-4xl mx-auto px-4 py-8 rounded-lg shadow-md
 }
 
 .messages {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    overflow-y: auto;
-    max-height: calc(100vh - 250px);
+    @apply flex flex-col items-start mb-20 overflow-y-auto max-h-96
 }
 
 .received {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-    align-self: flex-start;
-    max-width: 60%;
+    @apply flex flex-col mb-3 p-3 rounded-2xl bg-white shadow-md self-start max-w-[60%]
 }
 
 .sent {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #218AFF;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-    align-self: flex-end;
-    max-width: 60%;
+    @apply flex flex-col mb-3 p-3 rounded-2xl bg-blue-500 shadow-md self-end max-w-[60%]
 }
 
 .received p {
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
+    @apply m-0 p-0 text-base leading-relaxed text-gray-700
 }
 
 .sent p {
-    color: #fff;
+    @apply text-white
 }
 
 .form {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
+    @apply flex flex-row mb-5
 }
 
 .form input {
-    flex-grow: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #fff;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-    font-size: 16px;
-    color: #333;
+    @apply flex-grow px-4 py-2 rounded-md bg-white shadow-md text-base text-gray-700
 }
 
 .form button {
-    margin-left: 10px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    background-color: #218AFF;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
+    @apply ml-4 px-5 py-2 rounded-md bg-blue-500 shadow-md text-white text-base cursor-pointer
 }
 
 #miniPicture {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin: 15px;
+    @apply w-12 h-12 rounded-full mx-3 my-3
 }
 
 .user-header {
-  display: flex;
-  align-items: center;
+    @apply flex items-center
 }
 
 .user-name {
-  font-size: 24px;
-  font-weight: bold;
+    @apply text-2xl font-bold
 }
 </style>
