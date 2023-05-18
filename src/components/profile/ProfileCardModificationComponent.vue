@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import type { UserComplet } from '@/types';
+import { Form } from 'vee-validate'
+import { object, string } from 'yup'
+import type { InputField } from '@/types';
+import { VeeField } from '@/components'
 
 const props = defineProps({
     user : {
@@ -7,12 +11,53 @@ const props = defineProps({
         required : true
     }
 })
+
+const fields: InputField[] = [
+    {
+        label: 'Ville',
+        name: 'city',
+        type: 'text',
+        required: true,
+        placeholder: "Votre ville",
+    }
+]
+
+const initialValues = {
+    city: props.user.city,
+}
+
+const schema = object().shape({
+    city: string().required('Veuillez renseigner une ville.'),
+    description: string().required('Veuillez renseigner quelques mots sur vous.')
+})
+
+console.log(props.user.description)
 </script>
 
 <template>
-    <p>Lorem Salu bissame ! Wie geht's les samis ? Hans apporte moi une Wurschtsalad avec un picon bitte, s'il te plaît.
-  Voss ? Une Carola et du Melfor ? Yo dû, espèce de Knäckes, ch'ai dit un picon !</p>
-<p>Hopla vous savez que la mamsell Huguette, la miss Miss Dahlias du messti de Bischheim était au Christkindelsmärik en compagnie de Richard Schirmeck (celui qui a un blottkopf), le mari de Chulia Roberstau, qui lui trempait sa Nüdle dans sa Schneck ! Yo dû, Pfourtz ! Ch'espère qu'ils avaient du Kabinetpapier, Gal !</p>
-<p>Yoo ch'ai lu dans les DNA que le Racing a encore perdu contre Oberschaeffolsheim. Verdammi et moi ch'avais donc parié deux knacks et une flammekueche. Ah so ? T'inquiète, ch'ai ramené du schpeck, du chambon, un kuglopf et du schnaps dans mon rucksack. Allez, s'guelt ! Wotch a kofee avec ton bibalaekaess et ta wurscht ? Yeuh non che suis au réchime, je ne mange plus que des Grumbeere light et che fais de la chym avec Chulien. Tiens, un rottznoz sur le comptoir.</p>
-<p>Tu restes pour le lotto-owe ce soir, y'a baeckeoffe ? Yeuh non, merci vielmols mais che dois partir à la Coopé de Truchtersheim acheter des mänele et des rossbolla pour les gamins. Hopla tchao bissame ! Consectetur adipiscing elit</p>
+        <Form 
+        :validation-schema="schema"
+        :initial-values="initialValues"
+        >
+        <div class="-space-y-px rounded-md shadow-sm modification-profile">
+            <VeeField v-for="field in fields" :key="field.name" :field="field"/>
+
+            <label class="label">
+                <span class="label-text">Déscription</span>
+            </label>
+            <textarea id="description" class=" rounded-md shadow-sm w-full mt-2 description-field p-2 input" placeholder="Donnez quelques mots sur vous" :value="props.user.description"></textarea>
+        </div>
+        </Form>
 </template>
+
+<style>
+.modification-profile, .label-text {
+    color: azure;
+}
+.input {
+    color: black;
+}
+.description-field {
+    height: 200px;
+}
+</style>

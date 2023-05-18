@@ -12,7 +12,8 @@ import {
   ProfileTagsSportsComponent,
   ProfilePicturesIndicator,
   LikesOptionBar,
-  IconSetting
+  IconSetting,
+  ProfilePictureModification
 } from '@/components'
 import type { UserComplet, User } from '@/types';
 import { computed, defineComponent, ref } from 'vue';
@@ -59,24 +60,6 @@ const sections = [
     }
   },
   {
-    position: 5,
-    component: ProfileTagsMusiqueComponent,
-    props: {
-      name: "Musiques",
-      user_id: props.otherUser.id,
-      tags: tags_musique
-    }
-  },
-  {
-    position: 6,
-    component: ProfileTagsMovieComponent,
-    props: {
-      name: "Films",
-      user_id: props.otherUser.id,
-      tags: tags_movies
-    }
-  },
-  {
     position: 3,
     component: ProfileTagsVideoGamesComponent,
     props: {
@@ -92,6 +75,24 @@ const sections = [
       name: "Sports",
       user_id: props.otherUser.id,
       tags: tags_sports
+    }
+  },
+  {
+    position: 5,
+    component: ProfileTagsMusiqueComponent,
+    props: {
+      name: "Musiques",
+      user_id: props.otherUser.id,
+      tags: tags_musique
+    }
+  },
+  {
+    position: 6,
+    component: ProfileTagsMovieComponent,
+    props: {
+      name: "Films",
+      user_id: props.otherUser.id,
+      tags: tags_movies
     }
   },
   {
@@ -144,24 +145,37 @@ function posMinus() {
     currentSectionIndex.value--
   }
 }
+
+function updateUser() {
+  profileModification.value = !profileModification.value
+  // TODO sync with back-end when profile modification is done ?
+}
 </script>
 
 <template>
   <div class="card" :class="{'card-detailed overflow-hidden' : detailView||profileModification}">
     <div :class="{'w-full h-full' : detailView||profileModification, 'h-full': !detailView&&!profileModification}">
       <div :class="{' scroll-without-scrollbar' : detailView||profileModification, 'h-full': !detailView&&!profileModification}">
-        <div class="relative">
+
+        <div class="relative" v-if="!profileModification">
           <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (currentPicture?.fileName ?? 'utilisateur1.png')" />
           <div class="pictures-indicator" v-if="pics.length > 0">
             <ProfilePicturesIndicator :position="currentSectionIndex" :total="pics.length" />
           </div>
-          <IconSetting v-if="isMyProfile" class="setting-icon" @click="() => {profileModification = !profileModification}"/>
+          <IconSetting v-if="isMyProfile" class="setting-icon" @click="updateUser()"/>
           <div class="button-container" v-if="pics.length > 0">
             <p class="swipe-left center-left" @click=" posMinus()">&lt;</p>
             <p class="swipe-right center-right" @click=" posPlus()">&gt;</p>
           </div>
         </div>
-        
+
+        <div v-if="profileModification" class="relative">
+          <IconSetting v-if="isMyProfile" class="setting-icon" @click="() => {profileModification = !profileModification}"/>
+          <div class="profile-picture-modification">
+            <ProfilePictureModification v-for="section in sections" :key="section.position" :position="section.position"/>
+          </div>
+        </div>
+
         <div :class="{'card-info ': !detailView&&!profileModification, ' p-2 card-info-detailled': detailView||profileModification}">
           <div class="flex justify-between">
             <h2 class="no-padding-margin title">{{ otherUser.name }}, {{ otherUser.age }}</h2>
@@ -194,5 +208,11 @@ function posMinus() {
   top: 10px;
   right: 10px;
   cursor: pointer;
+  z-index: 100;
+}
+.profile-picture-modification {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 30px ;
 }
 </style>
