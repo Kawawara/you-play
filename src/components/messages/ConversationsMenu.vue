@@ -5,8 +5,6 @@ import { getConvs } from '@/services';
 const {user} = await useAuth();
 var convs = await getConvs(user.value.id);
 
-console.log(convs)
-
 for (const conv of convs[0]) {
     const mess_envoye = await getMessages(conv.idFirstUser, conv.id);
     const mess_recu = await getMessages(conv.idSecondUser, conv.id)
@@ -50,63 +48,42 @@ for (const conv of convs[0]) {
 
 <style type="text/css">
 .conversation-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    @apply list-none m-0 p-1 overflow-y-scroll
 }
 
 .conversation-list li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    @apply flex items-center mb-4 p-4 bg-white rounded-lg shadow
 }
 
 .avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
+    @apply w-10 h-10 rounded-full mr-5
 }
 
 .link {
-  display: block;
-  align-items: center;
-  width: 100%;
-  text-decoration: none;
-  color: var(--vt-c-indigo);
+    @apply block items-center w-full no-underline text-indigo-950
 }
 
 .link:hover {
-  background-color: transparent;
+    @apply bg-transparent
 }
 
 .conversation-info {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+    @apply flex flex-col flex-grow
 }
 
 .conversation-info h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: bold;
+    @apply m-0 text-xl font-bold
 }
 
 .conversation-info p {
-    margin: 0;
-    font-size: 14px;
+    @apply m-0 text-base
 }
 
 .sender-name {
-    font-weight: bold;
+    @apply font-bold;
 }
 
 .timestamp {
-    font-size: 12px;
-    color: #999;
+    @apply text-xs text-gray-500
 }
 </style>
