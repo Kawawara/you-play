@@ -1,6 +1,13 @@
 <script setup lang="ts">
-import { getMessages, getUser, getUsers, useAuth } from '@/services';
+import { getMessages, getUser, useAuth } from '@/services';
 import { getConvs } from '@/services';
+
+import store from '@/components/messages/store';
+
+const changerConversation = (conversationId: number) => {
+    store.mutations.updateIdConv(store.state, conversationId);
+    store.mutations.updateshowWelcome(store.state, false)
+};
 
 const {user} = await useAuth();
 var convs = await getConvs(user.value.id);
@@ -27,12 +34,12 @@ for (const conv of convs[0]) {
         }
     }
 }
+
 </script>
 
 <template>
   <ul class="conversation-list">
-    <li v-for="conv in convs[0]" :key="conv.id">
-      <router-link class="link" :to="{name:'message', params: { id: conv.id }}">
+    <li v-for="conv in convs[0]" :key="conv.id" @click="changerConversation(conv.id)">
         <div>
           <img class="avatar" :src="conv.secondUserPhoto">
           <div class="conversation-info">
@@ -41,7 +48,6 @@ for (const conv of convs[0]) {
             <span class="timestamp">{{ conv.timeLastMessage }}</span>
           </div>
         </div>
-      </router-link>
     </li>
   </ul>
 </template>
@@ -52,7 +58,7 @@ for (const conv of convs[0]) {
 }
 
 .conversation-list li {
-    @apply flex items-center mb-4 p-4 bg-white rounded-lg shadow
+    @apply flex items-center mb-4 p-4 bg-white rounded-lg shadow cursor-pointer
 }
 
 .avatar {

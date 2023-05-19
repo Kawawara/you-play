@@ -1,19 +1,14 @@
 <script setup lang="ts">
 
-import { getMessages, useAuth, getConv, getUser, useAxios, addMess } from '@/services';
-import { useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { getMessages, useAuth, getConv, getUser, addMess } from '@/services';
+import { onMounted, ref } from 'vue';
 import type { Message } from '@/types/Message';
-import type { RouteLocationNormalized } from 'vue-router';
-import { onBeforeRouteUpdate } from 'vue-router';
-
-const { Axios } = useAxios()
-const route = useRoute();
-var convId = Number(route.params.id);
+import store from '@/components/messages/store';
 
 const {user} = await useAuth();
 
-var conv = await getConv(convId);
+const convId = ref(store.state.idConv);
+var conv = await getConv(convId.value);
 
 var userMess = await getUser(conv.idSecondUser);
 
@@ -39,7 +34,6 @@ const content = ref('');
 
 const submit = async () => {
     try {
-        console.log(content.value)
         await addMess(content.value, conv.id, user.value.id);
         content.value = '';
         fetchMessages();
@@ -48,18 +42,20 @@ const submit = async () => {
     }
 };
 
-const beforeRouteUpdate = async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: () => void) => {
-  if (to.params.id !== from.params.id) {
-    convId = Number(to.params.id);
-    conv = await getConv(convId);
-    userMess = await getUser(conv.idSecondUser);
-    secondUserName = userMess.name;
-    fetchMessages();
-  }
-  next();
+const refreshData = async () => {
+    if(convId.value != store.state.idConv){
+        convId.value = store.state.idConv
+        conv = await getConv(convId.value);
+        userMess = await getUser(conv.idSecondUser);
+        secondUserName = userMess.name;
+        secondUserPhoto = 'photo_1.jpg';
+        fetchMessages();
+    }
 };
 
-onBeforeRouteUpdate(beforeRouteUpdate);
+onMounted(() => {
+    setInterval(refreshData, 500);
+});
 
 </script>
 
