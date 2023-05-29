@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { getMessages, useAuth, getConv, getUser, addMess } from '@/services';
+import { getMessages, useAuth, getConv, getUser, addMess, getPhotos } from '@/services';
 import { onMounted, ref } from 'vue';
 import type { Message } from '@/types/Message';
 import store from '@/components/messages/store';
@@ -13,7 +13,15 @@ var conv = await getConv(convId.value);
 var userMess = await getUser(conv.idSecondUser);
 
 var secondUserName = userMess.name;
-var secondUserPhoto = 'photo_1.jpg';
+var photos = await getPhotos(conv.idSecondUser);
+var randomNumber: number = Math.floor(Math.random() * 6) + 1;
+var secondUserPhoto = 'http://localhost:8000/api/public/utilisateur' + randomNumber +'.png';
+for(const photo of photos){
+    if(photo.position == 1){
+        secondUserPhoto = 'http://localhost:8000/api/public/users/' + photo.fileName;
+        break;
+    }
+}
 
 var all_mess = ref<Message[]>([]);
 
@@ -49,6 +57,15 @@ const refreshData = async () => {
         userMess = await getUser(conv.idSecondUser);
         secondUserName = userMess.name;
         secondUserPhoto = 'photo_1.jpg';
+        const photos = await getPhotos(conv.idSecondUser);
+        randomNumber = Math.floor(Math.random() * 6) + 1;
+        secondUserPhoto = 'http://localhost:8000/api/public/utilisateur' + randomNumber +'.png';
+        for(const photo of photos){
+            if(photo.position == 1){
+                secondUserPhoto = 'http://localhost:8000/api/public/users/' + photo.fileName;
+                break;
+            }
+        }
         fetchMessages();
     }
 };

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { getMessages, getUser, useAuth } from '@/services';
-import { getConvs } from '@/services';
-
+import { getMessages, getUser, useAuth, getPhotos, getConvs } from '@/services';
 import store from '@/components/messages/store';
+import type { Conv } from '@/types';
 
 const changerConversation = (conversationId: number) => {
     store.mutations.updateIdConv(store.state, conversationId);
@@ -12,34 +11,66 @@ const changerConversation = (conversationId: number) => {
 const {user} = await useAuth();
 var convs = await getConvs(user.value.id);
 
+var myConvs: Conv[] = [];
+
 for (const conv of convs[0]) {
     const mess_envoye = await getMessages(conv.idFirstUser, conv.id);
     const mess_recu = await getMessages(conv.idSecondUser, conv.id)
     const all_mess = [...mess_envoye, ...mess_recu];
     all_mess.sort((a, b) => b.id - a.id);
-    if(all_mess.length > 0)
-    {
+    if(all_mess.length > 0){
         const lastMess = all_mess[0];
         const userMess = await getUser(conv.idSecondUser);
         conv.secondUserName = userMess.name.substring(0, 15);
-        conv.secondUserPhoto = 'photo_1.jpg';
+        const photos = await getPhotos(conv.idSecondUser);
+        const randomNumber: number = Math.floor(Math.random() * 6) + 1;
+        conv.secondUserPhoto = 'http://localhost:8000/api/public/utilisateur' + randomNumber +'.png';
+        for(const photo of photos){
+            if(photo.position == 1){
+                conv.secondUserPhoto = 'http://localhost:8000/api/public/users/' + photo.fileName;
+                break;
+            }
+        }
         conv.contentLastMessage = lastMess.content.substring(0, 15);
         conv.nameLastMessage = "You";
+        
         const dateLastMessage = new Date(lastMess.created_at);
-        const minutes = dateLastMessage.getMinutes();
-        const minutesString = minutes < 10 ? "0" + minutes.toString() : minutes.toString();
-        conv.timeLastMessage = dateLastMessage.getHours() + ":" + minutesString;
+        const currentTime = new Date();
+        const timeDifference = currentTime.getTime() - dateLastMessage.getTime();
+        const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
+
+        if (hoursDifference < 24) {
+            const minutes = dateLastMessage.getMinutes();
+            const minutesString = minutes < 10 ? '0' + minutes.toString() : minutes.toString();
+            conv.timeLastMessage = dateLastMessage.getHours() + ':' + minutesString;
+        } else if (hoursDifference < 48) {
+            conv.timeLastMessage = 'Hier, ' + dateLastMessage.getHours() + ':' + dateLastMessage.getMinutes();
+        } else {
+            const day = dateLastMessage.getDate();
+            const month = dateLastMessage.getMonth() + 1;
+            const year = dateLastMessage.getFullYear();
+            const formattedDate = `${day}/${month}/${year}`;
+            conv.timeLastMessage = formattedDate + ', ' + dateLastMessage.getHours() + ':' + dateLastMessage.getMinutes();
+        }
+
         if(lastMess.idUser != user.value.id){
             conv.nameLastMessage = userMess.name;
         }
+        myConvs.push(conv);
     }
 }
+
+myConvs.sort((a, b) => {
+    const timeA = new Date(a.timeLastMessage).getTime();
+    const timeB = new Date(b.timeLastMessage).getTime();
+    return timeB - timeA;
+});
 
 </script>
 
 <template>
   <ul class="conversation-list">
-    <li v-for="conv in convs[0]" :key="conv.id" @click="changerConversation(conv.id)">
+    <li v-for="conv in myConvs" :key="conv.id" @click="changerConversation(conv.id)">
         <div>
           <img class="avatar" :src="conv.secondUserPhoto">
           <div class="conversation-info">
