@@ -13,8 +13,6 @@ const props = defineProps({
         type: Object as () => Picture
     }
 })
-// console.log(props.position)
-// console.log(props.picture)
 const isPicture = ref(false)
 if (props.picture !== undefined) {
     isPicture.value = true

@@ -31,8 +31,7 @@ const props = defineProps({
     required: true,
   }
 })
-
-const pics = await getPictures(props.otherUser.id ?? props.user.id)
+const pics = await getPictures(props?.otherUser?.id ?? props?.user?.id)
 
 const tags_musique = ["Techno", "Rap", "Pop", "Jazz", "Latino"]
 const tags_movies = ["Harry Potter", "Back to the Future", "Spider-Man"]
@@ -46,7 +45,7 @@ const sections = [
     position: 1,
     component: ProfileStatusComponent,
     props: {
-      user_id: props.otherUser.id,
+      user_id: props.otherUser?.id,
       user_city: props.otherUser?.city
     }
   },
@@ -55,8 +54,8 @@ const sections = [
     component: ProfileDescriptionComponnent,
     props: {
       name: "Description",
-      user_id: props.otherUser.id,
-      user_description: props.otherUser.description ?? ""
+      user_id: props.otherUser?.id,
+      user_description: props.otherUser?.description ?? ""
     }
   },
   {
@@ -64,7 +63,7 @@ const sections = [
     component: ProfileTagsVideoGamesComponent,
     props: {
       name: "Jeux vidéos",
-      user_id: props.otherUser.id,
+      user_id: props.otherUser?.id,
       tags: tags_video_games
     }
   },
@@ -73,7 +72,7 @@ const sections = [
     component: ProfileTagsSportsComponent,
     props: {
       name: "Sports",
-      user_id: props.otherUser.id,
+      user_id: props.otherUser?.id,
       tags: tags_sports
     }
   },
@@ -82,7 +81,7 @@ const sections = [
     component: ProfileTagsMusiqueComponent,
     props: {
       name: "Musiques",
-      user_id: props.otherUser.id,
+      user_id: props.otherUser?.id,
       tags: tags_musique
     }
   },
@@ -91,7 +90,7 @@ const sections = [
     component: ProfileTagsMovieComponent,
     props: {
       name: "Films",
-      user_id: props.otherUser.id,
+      user_id: props.otherUser?.id,
       tags: tags_movies
     }
   },
@@ -100,7 +99,7 @@ const sections = [
     component: ProfileTagsLangageComponent,
     props: {
       name: "Langues",
-      user_id: props.otherUser.id,
+      user_id: props.otherUser?.id,
       tags: tags_langage
     }
   },
@@ -127,7 +126,7 @@ const currentPicture = computed(() => pics.find(item => item.position == current
 const detailView = ref(false)
 
 let isMyProfile = false
-if (props.user.id === props.otherUser.id) {
+if (props.user.id === props.otherUser?.id) {
   isMyProfile = true
 }
 
@@ -178,7 +177,7 @@ function updateUser() {
 
         <div :class="{'card-info ': !detailView&&!profileModification, ' p-2 card-info-detailled': detailView||profileModification}">
           <div class="flex justify-between">
-            <h2 class="no-padding-margin title">{{ otherUser.name }}, {{ otherUser.age }}</h2>
+            <h2 class="no-padding-margin title">{{ otherUser?.name }}, {{ otherUser?.age }}</h2>
             <div v-if="!profileModification" class="svg-container detaille" @click="() => {detailView = !detailView}">
               <IconMoreInfos />
             </div>

@@ -31,7 +31,6 @@ const schema = object().shape({
     description: string().required('Veuillez renseigner quelques mots sur vous.')
 })
 
-console.log(props.user.description)
 </script>
 
 <template>

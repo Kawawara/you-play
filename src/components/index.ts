@@ -12,7 +12,6 @@ export { default as SignInPage } from './connection/SignInPage.vue'
 
 // Search
 export { default as SearchComponent } from './search/SearchComponent.vue'
-export { default as SearchComponentDetaille } from './search/SearchComponentDetaille.vue'
 
 // Likes
 export { default as LikesMenu } from './likes/LikesMenu.vue'
@@ -75,6 +74,7 @@ export { default as MultiTabs } from './MultiTabs.vue'
 
 export { default as VeeField } from './VeeField.vue'
 
+export { default as Spinner } from './Spinner.vue'
 
 
 

@@ -4,7 +4,6 @@ import { useAxios, useJWT } from '@/services'
 import { useToast } from "vue-toastification"
 
 const user = ref<UserComplet | any>()
-let allUsers = <UserComplet | any>[]
 const toast = useToast()
 
 const useAuth = async () => {
@@ -12,27 +11,7 @@ const useAuth = async () => {
   const { Axios } = useAxios()
   const { jwt, payload } = useJWT()
   const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
-if(user.value && user.value.status == 0){
-  const res = await Axios.get(`users`)
-  if (res.status !== 200) throw new Error("Error")
 
-  const usersTEMP = <any>[]
-  res.data.forEach((user: any) => {
-    const userView = {
-      id: 0,
-      username: "",
-      email: "",
-      status: 0,  
-    }
-
-    userView.id = user.id
-    userView.username = user.username
-    userView.email = user.email
-    userView.status = user.status
-    usersTEMP.push(userView)
-  })
-  allUsers = usersTEMP
-}
   const putUser = async (id: number, values: User) => {
     if(values){
       const response = await Axios.put(`users/${id}/`, {
@@ -135,7 +114,6 @@ if(user.value && user.value.status == 0){
     user,
     jwt,
     payload,
-    allUsers,
 
     login,
     logout,
