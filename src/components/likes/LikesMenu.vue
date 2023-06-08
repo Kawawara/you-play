@@ -14,6 +14,8 @@ var hasAbonnement = false;
 const abonnements = await getSubscriptions(user.value.id);
 if(abonnements.length > 0){
     hasAbonnement = true;
+    // enlever
+    hasAbonnement = false;
 }
 
 var notAbonneWithLikes = false;
@@ -51,7 +53,6 @@ for (const match of matches) {
 // likes
 var myLikes: Like[] = [];
 var likes = await getLikes(user.value.id);
-const nbLike = 0;
 
 for (const like of likes) {
     const userMess = await getUser(like.idUserWhoLiked);
@@ -76,6 +77,8 @@ for (const like of likes) {
         myLikes.push(like);
     }
 }
+
+const nbLike = myLikes.length;
 
 if(!hasAbonnement && myLikes.length > 0){
     notAbonneWithLikes = true;
