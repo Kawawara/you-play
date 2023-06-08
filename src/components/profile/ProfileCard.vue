@@ -149,6 +149,10 @@ function updateUser() {
   profileModification.value = !profileModification.value
   // TODO sync with back-end when profile modification is done ?
 }
+
+function resetImageBar() {
+  currentSectionIndex.value = 1
+}
 </script>
 
 <template>
@@ -190,7 +194,7 @@ function updateUser() {
             <ProfileCardModificationComponent :user="props.user"/>
           </div>
           <div class="option-bar">
-            <LikesOptionBar v-if="!isMyProfile" :connectedUser="user" :otherUser="props.otherUser" :otherUserProfilePic="pics[0]"/>
+            <LikesOptionBar v-if="!isMyProfile" :connectedUser="user" :otherUser="props.otherUser" :otherUserProfilePic="pics[0]" @reset="resetImageBar"/>
           </div>
         </div>
       </div>
