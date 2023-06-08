@@ -43,17 +43,14 @@ for (const conv of convs[0]) {
             const minutes = dateLastMessage.getMinutes();
             const minutesString = minutes < 10 ? '0' + minutes.toString() : minutes.toString();
             conv.timeLastMessage = dateLastMessage.getHours() + ':' + minutesString;
-            console.log('timeLastMessage ' + conv.timeLastMessage)
         } else if (hoursDifference < 48) {
             conv.timeLastMessage = 'Hier, ' + dateLastMessage.getHours() + ':' + dateLastMessage.getMinutes();
-            console.log('timeLastMessage ' + conv.timeLastMessage)
         } else {
             const day = dateLastMessage.getDate();
             const month = dateLastMessage.getMonth() + 1;
             const year = dateLastMessage.getFullYear();
             const formattedDate = `${day}/${month}/${year}`;
             conv.timeLastMessage = formattedDate + ', ' + dateLastMessage.getHours() + ':' + dateLastMessage.getMinutes();
-            console.log('timeLastMessage ' + conv.timeLastMessage)
         }
 
         if(lastMess.idUser != user.value.id){
@@ -64,7 +61,7 @@ for (const conv of convs[0]) {
 }
 
 // La valeur updated_at contient la date du dernier message recu, on fait un sort desc
-myConvs.sort((a, b) => b.updated_at.getTime() - a.updated_at.getTime());
+myConvs.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
 
 </script>
 

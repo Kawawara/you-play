@@ -25,11 +25,22 @@ for(const photo of photos){
 
 var all_mess = ref<Message[]>([]);
 
+const messagesContainer = ref<HTMLDivElement | null>(null);
+
 const fetchMessages = async () => {
     const mess_envoye = await getMessages(conv.idFirstUser, conv.id);
     const mess_recu = await getMessages(conv.idSecondUser, conv.id);
     const new_messages = [...mess_envoye, ...mess_recu].sort((a, b) => a.id - b.id);
     all_mess.value = new_messages;
+
+    scrollToBottom();
+};
+
+const scrollToBottom = () => {
+    const container = messagesContainer.value;
+    if (container) {
+        container.scrollTop = container.scrollHeight;
+    }
 };
 
 fetchMessages();
@@ -82,7 +93,7 @@ onMounted(() => {
             <img id="miniPicture" :src="secondUserPhoto"/>
             <span class="user-name">{{ secondUserName }}</span>
         </h1>
-		<div class="messages">
+		<div class="messages" ref="messagesContainer">
 			<div v-for="mes in all_mess" :key="mes.id" :class="{ 'sent': mes.idUser === conv.idFirstUser, 'received': mes.idUser !== conv.idFirstUser }">
 				<p>{{ mes.content }}</p>
 			</div>
@@ -100,7 +111,7 @@ onMounted(() => {
 }
 
 .messages {
-    @apply flex flex-col items-start mb-20 overflow-y-auto max-h-96
+    @apply flex flex-col items-start mb-20 overflow-y-scroll max-h-96
 }
 
 .received {
