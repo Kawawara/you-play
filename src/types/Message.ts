@@ -2,6 +2,7 @@ export type Conv = {
     id: number
     idFirstUser: number
     idSecondUser: number
+    updated_at: Date
     secondUserName: string
     secondUserPhoto: string
     nameLastMessage: string
