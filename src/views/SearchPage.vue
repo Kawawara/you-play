@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AppLayout, LikesMenu, MessagesMenu, SearchComponent, SearchComponentDetaille} from '@/components';
+import { AppLayout, LikesMenu, MessagesMenu, SearchComponent, Spinner} from '@/components';
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
 
@@ -34,7 +34,8 @@ const tabs = [
 <template>
     <AppLayout :tabs="tabs"  :profile="false">
 
-      <SearchComponent :user="(user)"></SearchComponent>
+      <SearchComponent :user="(user)" v-if="user"></SearchComponent>
+      <Spinner v-else />
 
     </AppLayout>
 </template>

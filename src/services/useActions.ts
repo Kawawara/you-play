@@ -16,7 +16,7 @@ type LastAction = {
 }
 
 const lastAction = ref<LastAction>()
-const users = ref(await getUsers())
+const users = ref<UserComplet[]>()
 const lastUser = ref<UserComplet>()
 
 const useActions =  async() =>
@@ -35,6 +35,7 @@ const useActions =  async() =>
             saveLastAction(Actions.LIKE, res.id)
             checkMatch(res, likedUser, profilePic)
             nextUser()
+            initService(userid)
         } else {
             toast.error("Une erreur c'est produite")
         }
@@ -48,6 +49,7 @@ const useActions =  async() =>
         if (response.status == 200) {
             saveLastAction(Actions.DISLIKE, response.data.data.id)
             nextUser()
+            initService(userid)
         } else {
             toast.error("Une erreur c'est produite")
         }
@@ -62,6 +64,7 @@ const useActions =  async() =>
             saveLastAction(Actions.SUPERLIKE, response.data.data.id)
             checkMatch(response.data.data, likedUser, profilePic)
             nextUser()
+            initService(userid)
         } else {
             toast.error("Une erreur c'est produite")
         }
@@ -109,11 +112,13 @@ const useActions =  async() =>
     }
     const checkMatch = async(data :any, likedUser :UserComplet, profilePic :Picture) => {
         let match = false
-        data.forEach((element: any)  => {
-            if (element.hasOwnProperty('idUser2') ) {
-                match = true
-            }
-        });
+        if (Array.isArray(data)) {
+            data.forEach((element: any)  => {
+                if (element.hasOwnProperty('idUser2') ) {
+                    match = true
+                }
+            });
+        }
         if (match || lastAction.value?.action == Actions.SUPERLIKE) {
             toast.success("Nouveau match")
             renderOverlay(MatchOverlay, {
@@ -130,12 +135,18 @@ const useActions =  async() =>
             })
         }
     }
+    const initService = async(id: Number) => {
+        if (users.value == undefined || users.value.length == 0) {
+                users.value = await getUsers(id)
+        }
+    }
 
     return {
         postLike,
         postDislike,
         postSuperlike,
         goback,
+        initService,
 
         users
     }

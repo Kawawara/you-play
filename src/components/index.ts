@@ -12,7 +12,6 @@ export { default as SignInPage } from './connection/SignInPage.vue'
 
 // Search
 export { default as SearchComponent } from './search/SearchComponent.vue'
-export { default as SearchComponentDetaille } from './search/SearchComponentDetaille.vue'
 
 // Likes
 export { default as LikesMenu } from './likes/LikesMenu.vue'
@@ -20,6 +19,8 @@ export { default as LikesOptionBar } from './likes/LikesOptionBar.vue'
 
 // Profile
 export { default as ProfileCard } from './profile/ProfileCard.vue'
+export { default as ProfileCardModificationComponent } from './profile/ProfileCardModificationComponent.vue'
+export { default as ProfilePictureModification } from './profile/ProfilePictureModification.vue'
 export { default as ProfileCardDetailledComponent } from './profile/ProfileCardDetailledComponent.vue'
 export { default as ProfilePicturesIndicator } from './profile/ProfilePicturesIndicator.vue'
 export { default as ProfileStatusComponent } from './profile/ProfileStatusComponent.vue'
@@ -73,6 +74,7 @@ export { default as MultiTabs } from './MultiTabs.vue'
 
 export { default as VeeField } from './VeeField.vue'
 
+export { default as Spinner } from './Spinner.vue'
 
 
 

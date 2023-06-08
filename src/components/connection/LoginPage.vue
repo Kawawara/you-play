@@ -10,7 +10,7 @@ import {
 
   const router = useRouter()
 
-  const { login, user } = await useAuth()
+  const { login } = await useAuth()
 
 const fields: InputField[] = [
     {

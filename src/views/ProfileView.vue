@@ -36,7 +36,7 @@ const User = await getUser(user.value.id)
 <template>
   <AppLayout :tabs="tabs" :profile="true">
 
-    <ProfileCard :user="User"></ProfileCard>
+    <ProfileCard :user="User" :other-user="User"></ProfileCard>
 
   </AppLayout>
 </template>

@@ -5,10 +5,11 @@ const { Axios } = useAxios()
 
 const useSearch =  async() =>
 {
-    const getUsers = async() => {
-    
-        const response = await Axios.get(`users/`)
-        return response.data.data as [UserComplet]
+    const getUsers = async(id :Number) => {
+        if(id) {
+            const response = await Axios.get(`simpleSearch?idUser=${id}`)
+            return response.data.data as [UserComplet]
+        }
     }
     const getUser = async(id :Number) => {
         const response = await Axios.get(`users/${id}`)
@@ -19,9 +20,10 @@ const useSearch =  async() =>
         return response.data.data as [Picture]
     }
 return {
+
     getUsers,
     getPictures,
-    getUser
+    getUser,
 }
 }
 
