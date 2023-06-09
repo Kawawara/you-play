@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { Activity, type UserComplet } from '@/types';
+import type { Activity,  UserComplet, InputField } from '@/types';
 import { Form } from 'vee-validate'
 import { object, string } from 'yup'
-import type { InputField } from '@/types';
 import { VeeField } from '@/components'
 import { useActivities } from '@/services';
 
