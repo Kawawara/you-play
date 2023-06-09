@@ -2,8 +2,9 @@
 import type { Activity,  UserComplet, InputField } from '@/types';
 import { Form } from 'vee-validate'
 import { object, string } from 'yup'
-import { VeeField } from '@/components'
+import { VeeField, IconDislike, IconLike, TagFormComponnent } from '@/components'
 import { useActivities } from '@/services';
+import { ref } from 'vue';
 
 enum ActitiesType {
     NIGHTACTIVITY = 6, 
@@ -21,17 +22,19 @@ const props = defineProps({
     }
 })
 
-const { getActivitiesByType, getActivities, verifyActivity } = useActivities()
+const { getActivitiesByType, getActivities, verifyActivity, removeTagFromUser, addTagToUser } = useActivities()
 
 const userTags :Activity[] = [{id: 1, type:1, name:undefined}]
-const testList :Activity[] = await getActivities()
+const testList = ref<Activity[]>(await getActivities())
 
-const tags_offline_video_games = getActivitiesByType(ActitiesType.OFFLINEGAME, testList)
-const tags_movies_type = getActivitiesByType(ActitiesType.MOVIETYPE, testList)
-const tags_video_games = getActivitiesByType(ActitiesType.ONLINEGAME, testList)
-const tags_sports = getActivitiesByType(ActitiesType.SPORTS, testList)
-const tags_activities = getActivitiesByType(ActitiesType.ACTIVITY, testList)
-const tags_night_activities = getActivitiesByType(ActitiesType.NIGHTACTIVITY, testList)
+const tags: string | any[] = []
+tags[ActitiesType.MOVIETYPE] = {type: ActitiesType.MOVIETYPE , name:"Genres de films", activities: getActivitiesByType(ActitiesType.MOVIETYPE, testList.value)}
+tags[ActitiesType.OFFLINEGAME] = {type: ActitiesType.OFFLINEGAME , name:"Jeux vidéos offline", activities: getActivitiesByType(ActitiesType.OFFLINEGAME, testList.value)}
+tags[ActitiesType.ONLINEGAME] = {type: ActitiesType.ONLINEGAME , name:"Jeux vidéos", activities: getActivitiesByType(ActitiesType.ONLINEGAME, testList.value)}
+tags[ActitiesType.SPORTS] = {type: ActitiesType.SPORTS , name:"Sports", activities: getActivitiesByType(ActitiesType.SPORTS, testList.value)}
+tags[ActitiesType.ACTIVITY] = {type: ActitiesType.ACTIVITY , name:"Sorties", activities: getActivitiesByType(ActitiesType.ACTIVITY, testList.value)}
+tags[ActitiesType.NIGHTACTIVITY] = {type: ActitiesType.NIGHTACTIVITY , name:"Sorties nocturnes", activities: getActivitiesByType(ActitiesType.NIGHTACTIVITY, testList.value)}
+tags.shift()
 
 const fields: InputField[] = [
     {
@@ -52,6 +55,19 @@ const schema = object().shape({
     description: string().required('Veuillez renseigner quelques mots sur vous.')
 })
 
+const verifyAll = (x :Activity, i: any) => {
+    const isSameType = i.type == x.type
+    const isSameActivity = verifyActivity(x, getActivitiesByType(i.type, userTags))
+    if (isSameType && isSameActivity) {
+        return true
+    }
+    return false
+}
+
+const refreshDatas = async () => {
+    testList.value = await getActivities()
+}
+
 </script>
 
 <template>
@@ -68,64 +84,22 @@ const schema = object().shape({
             <textarea id="description" class=" rounded-md shadow-sm w-full mt-2 description-field p-2 input" placeholder="Donnez quelques mots sur vous" :value="props.user.description"></textarea>
         </div>
         <div class="-space-y-px rounded-md shadow-sm modification-profile">
-            <div class="flex flex-col">
+            <div class="flex flex-col" v-for="i in tags">
                 <label class="label">
-                    <span class="label-text">Tags Jeux vidéos</span>
+                    <span class="label-text">Tags {{ i.name }}</span>
                 </label>
-                <div class="rounded-md shadow-sm bg-slate-50 text-black">
-                    <select>
-                        <option v-for="tag in tags_video_games" :disabled="verifyActivity(tag, userTags)" :value="tag.id"> TEST {{ tag.id }}{{ tag.name }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex flex-col">
-                <label class="label">
-                    <span class="label-text">Tags Sports</span>
-                </label>
-                <div class="rounded-md shadow-sm bg-slate-50 text-black">
-                    <select>
-                        <option v-for="tag in tags_sports" :disabled="verifyActivity(tag, userTags)" :value="tag.id"> TEST {{ tag.id }}{{ tag.name }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex flex-col">
-                <label class="label">
-                    <span class="label-text">Tags Jeux vidéos offline</span>
-                </label>
-                <div class="rounded-md shadow-sm bg-slate-50 text-black">
-                    <select>
-                        <option v-for="tag in tags_offline_video_games" :disabled="verifyActivity(tag, userTags)" :value="tag.id"> TEST {{ tag.id }}{{ tag.name }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex flex-col">
-                <label class="label">
-                    <span class="label-text">Tags Genres de films</span>
-                </label>
-                <div class="rounded-md shadow-sm bg-slate-50 text-black">
-                    <select>
-                        <option v-for="tag in tags_movies_type" :disabled="verifyActivity(tag, userTags)" :value="tag.id"> TEST {{ tag.id }}{{ tag.name }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex flex-col">
-                <label class="label">
-                    <span class="label-text">Tags Sorties</span>
-                </label>
-                <div class="rounded-md shadow-sm bg-slate-50 text-black">
-                    <select>
-                        <option v-for="tag in tags_activities" :disabled="verifyActivity(tag, userTags)" :value="tag.id"> TEST {{ tag.id }}{{ tag.name }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex flex-col">
-                <label class="label">
-                    <span class="label-text">Tags Sorties nocturnes</span>
-                </label>
-                <div class="rounded-md shadow-sm bg-slate-50 text-black">
-                    <select>
-                        <option v-for="tag in tags_night_activities" :disabled="verifyActivity(tag, userTags)" :value="tag.id"> TEST {{ tag.id }}{{ tag.name }}</option>
-                    </select>
+                <div class="rounded-md shadow-sm bg-slate-50 text-black p-1">
+                    <div class="rounded-md shadow-sm bg-black/50 p-1 w-fit mx-1 flex"
+                    v-for="tag in userTags.filter(x => verifyAll(x, i))">
+                        <div class="flex justify-between align-middle">
+                            <span>{{ tag.name ?? `tag n°${tag.id}` }}</span>
+                            <div class="close-button-modal ml-1">
+                                <IconDislike @click="removeTagFromUser(props.user.id, tag.id)" />
+                            </div>
+                        </div>
+                    </div>
+                    <TagFormComponnent :user="props.user" :tag-category="i" :user-tags="userTags" @refresh="refreshDatas()"/>
+                    
                 </div>
             </div>
         </div>

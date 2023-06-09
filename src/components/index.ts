@@ -31,6 +31,7 @@ export { default as ProfileTagsVideoGamesComponent } from './profile/ProfileTags
 export { default as ProfileTagsActivitiesComponent } from './profile/ProfileTagsActivitiesComponent.vue'
 export { default as ProfileTagsNightActivitiesComponent } from './profile/ProfileTagsNightActivitiesComponent.vue'
 export { default as ProfileTagsSportsComponent } from './profile/ProfileTagsSportsComponent.vue'
+export { default as TagFormComponnent } from './profile/TagFormComponnent.vue'
 
 // Messages
 export { default as MessagesMenu } from './messages/MessagesMenu.vue'

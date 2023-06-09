@@ -53,10 +53,26 @@ const useActivities = () => {
         }
     }
 
+    const removeTagFromUser = async(userId: Number, tagId:number) => {
+        const response = await Axios.delete(`/usersActivities/{id}?idUser=${userId}&idActivity=${tagId}`)
+    }
+    
+    const addTagToUser = async(userId: Number, tagId:number) => {
+        const data = {
+            idUser: userId,
+            idActivity: tagId
+        }
+        const response = await Axios.post('/usersActivities', data)
+        
+    }
+
+
     return {
         getActivities,
         getActivitiesByType,
-        verifyActivity
+        verifyActivity,
+        removeTagFromUser,
+        addTagToUser
     }
 }
 
