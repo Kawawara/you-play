@@ -16,9 +16,9 @@ import {
 ProfileTagsActivitiesComponent,
 ProfileTagsNightActivitiesComponent
 } from '@/components'
-import type { UserComplet } from '@/types';
+import type { Activity, UserComplet } from '@/types';
 import { computed, defineComponent, ref } from 'vue';
-import { useSearch } from '@/services'
+import { useSearch, useActivities } from '@/services'
 
 enum ActitiesType {
     NIGHTACTIVITY = 6, 
@@ -31,6 +31,7 @@ enum ActitiesType {
 // TODO filter on getActivitybyUSer
 
 const { getPictures } = await useSearch()
+const { getActivitiesByType } = await useActivities()
 
 const props = defineProps({
   otherUser: {
@@ -55,16 +56,20 @@ interface Emits {
     (e: 'detail'): void,
 }
 const emits = defineEmits<Emits>();
+const userTags :Activity[] = props.user.activities
+
+const tags: Activity | any[] = []
+tags[ActitiesType.MOVIETYPE] = {type: ActitiesType.MOVIETYPE , name:"Genres de films", activities: getActivitiesByType(ActitiesType.MOVIETYPE, userTags)}
+tags[ActitiesType.OFFLINEGAME] = {type: ActitiesType.OFFLINEGAME , name:"Jeux vidéos offline", activities: getActivitiesByType(ActitiesType.OFFLINEGAME, userTags)}
+tags[ActitiesType.ONLINEGAME] = {type: ActitiesType.ONLINEGAME , name:"Jeux vidéos", activities: getActivitiesByType(ActitiesType.ONLINEGAME, userTags)}
+tags[ActitiesType.SPORTS] = {type: ActitiesType.SPORTS , name:"Sports", activities: getActivitiesByType(ActitiesType.SPORTS, userTags)}
+tags[ActitiesType.ACTIVITY] = {type: ActitiesType.ACTIVITY , name:"Sorties", activities: getActivitiesByType(ActitiesType.ACTIVITY, userTags)}
+tags[ActitiesType.NIGHTACTIVITY] = {type: ActitiesType.NIGHTACTIVITY , name:"Sorties nocturnes", activities: getActivitiesByType(ActitiesType.NIGHTACTIVITY, userTags)}
+// tags.shift()
+
 
 
 const pics = await getPictures(props?.otherUser?.id ?? props?.user?.id)
-
-const tags_offline_video_games = ["zelda", "tetris", "darksoul"]
-const tags_movies_type = ["Drama", "Horreur", "Sci-fi"]
-const tags_video_games = ["R6S", "FIFA", "Super Mario", "Poker"]
-const tags_sports = ["Kayak", "Badminton", "MMA"]
-const tags_activities = ["Café", "Musés"]
-const tags_night_activities = ["Boites de nuit", "Bars"]
 
 const sections = [
   {
@@ -91,7 +96,7 @@ const sections = [
     props: {
       name: "Jeux vidéos",
       user_id: props.otherUser?.id,
-      tags: tags_video_games
+      tags: tags[ActitiesType.ONLINEGAME].activities
     }
   },
   {
@@ -100,7 +105,7 @@ const sections = [
     props: {
       name: "Sports",
       user_id: props.otherUser?.id,
-      tags: tags_sports
+      tags: tags[ActitiesType.SPORTS].activities
     }
   },
   {
@@ -109,7 +114,7 @@ const sections = [
     props: {
       name: "Jeux vidéos offline",
       user_id: props.otherUser?.id,
-      tags: tags_offline_video_games
+      tags: tags[ActitiesType.OFFLINEGAME].activities
     }
   },
   {
@@ -118,7 +123,7 @@ const sections = [
     props: {
       name: "Genres de films",
       user_id: props.otherUser?.id,
-      tags: tags_movies_type
+      tags: tags[ActitiesType.MOVIETYPE].activities
     }
   },
   {
@@ -127,7 +132,7 @@ const sections = [
     props: {
       name: "Sorties",
       user_id: props.otherUser?.id,
-      tags: tags_activities
+      tags: tags[ActitiesType.ACTIVITY].activities
     }
   },
   {
@@ -136,7 +141,7 @@ const sections = [
     props: {
       name: "Sorties nocturnes",
       user_id: props.otherUser?.id,
-      tags: tags_night_activities
+      tags: tags[ActitiesType.NIGHTACTIVITY].activities
     }
   },
   {

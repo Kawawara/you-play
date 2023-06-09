@@ -8,7 +8,14 @@ const useSearch =  async() =>
     const getUsers = async(id :Number) => {
         if(id) {
             const response = await Axios.get(`simpleSearch?idUser=${id}`)
-            return response.data.data as [UserComplet]
+            const users: UserComplet[] = []
+            response.data.data.forEach((element: any) => {
+                const userComplet = element[0]
+                console.log(element[1])
+                userComplet["activities"] = element[1]
+                users.push(userComplet as UserComplet)
+            });
+            return users
         }
     }
     const getUser = async(id :Number) => {
