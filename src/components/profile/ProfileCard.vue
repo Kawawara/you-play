@@ -16,7 +16,7 @@ import {
 ProfileTagsActivitiesComponent,
 ProfileTagsNightActivitiesComponent
 } from '@/components'
-import type { UserComplet, User } from '@/types';
+import type { UserComplet } from '@/types';
 import { computed, defineComponent, ref } from 'vue';
 import { useSearch } from '@/services'
 
@@ -40,8 +40,23 @@ const props = defineProps({
   user: {
     type: Object as () => UserComplet,
     required: true,
+  },
+  detailView : {
+    type: Boolean
+  },
+  profileModification: {
+    type: Boolean
   }
 })
+
+interface Emits {
+    (e: 'update'): void,
+    (e: 'modif'): void,
+    (e: 'detail'): void,
+}
+const emits = defineEmits<Emits>();
+
+
 const pics = await getPictures(props?.otherUser?.id ?? props?.user?.id)
 
 const tags_offline_video_games = ["zelda", "tetris", "darksoul"]
@@ -121,7 +136,7 @@ const sections = [
     props: {
       name: "Sorties nocturnes",
       user_id: props.otherUser?.id,
-      tags: tags_activities
+      tags: tags_night_activities
     }
   },
   {
@@ -137,14 +152,12 @@ const currentSectionIndex = ref(1)
 const currentSection = computed(() => sections.find(item => item.position == currentSectionIndex.value))
 const currentPicture = computed(() => pics.find(item => item.position == currentSectionIndex.value))
 
-const detailView = ref(false)
 
 let isMyProfile = false
 if (props.user.id === props.otherUser?.id) {
   isMyProfile = true
 }
 
-const profileModification = ref(false)
 
 
 function posPlus() {
@@ -159,10 +172,6 @@ function posMinus() {
   }
 }
 
-function updateUser() {
-  profileModification.value = !profileModification.value
-  // TODO sync with back-end when profile modification is done ?
-}
 
 function resetImageBar() {
   currentSectionIndex.value = 1
@@ -170,42 +179,42 @@ function resetImageBar() {
 </script>
 
 <template>
-  <div class="card" :class="{'card-detailed overflow-hidden' : detailView||profileModification}">
-    <div :class="{'w-full h-full' : detailView||profileModification, 'h-full': !detailView&&!profileModification}">
-      <div :class="{' scroll-without-scrollbar' : detailView||profileModification, 'h-full': !detailView&&!profileModification}">
+  <div class="card" :class="{'card-detailed overflow-hidden' : props.detailView||props.profileModification}">
+    <div :class="{'w-full h-full' : props.detailView||props.profileModification, 'h-full': !props.detailView&&!props.profileModification}">
+      <div :class="{' scroll-without-scrollbar' : props.detailView||props.profileModification, 'h-full': !props.detailView&&!props.profileModification}">
 
-        <div class="relative" v-if="!profileModification">
+        <div class="relative" v-if="!props.profileModification">
           <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (currentPicture?.fileName ?? 'utilisateur1.png')" />
           <div class="pictures-indicator" v-if="pics.length > 0">
             <ProfilePicturesIndicator :position="currentSectionIndex" :total="pics.length" />
           </div>
-          <IconSetting v-if="isMyProfile" class="setting-icon" @click="updateUser()"/>
+          <IconSetting v-if="isMyProfile" class="setting-icon" @click="$emit('modif')"/>
           <div class="button-container" v-if="pics.length > 0">
             <p class="swipe-left center-left" @click=" posMinus()">&lt;</p>
             <p class="swipe-right center-right" @click=" posPlus()">&gt;</p>
           </div>
         </div>
 
-        <div v-if="profileModification" class="relative">
-          <IconSetting v-if="isMyProfile" class="setting-icon" @click="() => {profileModification = !profileModification}"/>
+        <div v-if="props.profileModification" class="relative">
+          <IconSetting v-if="isMyProfile" class="setting-icon" @click="$emit('modif')"/>
           <div class="profile-picture-modification">
             <ProfilePictureModification v-for="section in sections" :key="section.position" :position="section.position" :picture="pics[section.position -1]"/>
           </div>
         </div>
 
-        <div :class="{'card-info ': !detailView&&!profileModification, ' p-2 card-info-detailled': detailView||profileModification}">
+        <div :class="{'card-info ': !props.detailView&&!props.profileModification, ' p-2 card-info-detailled': props.detailView||props.profileModification}">
           <div class="flex justify-between">
             <h2 class="no-padding-margin title">{{ otherUser?.name }}, {{ otherUser?.age }}</h2>
-            <div v-if="!profileModification" class="svg-container detaille" @click="() => {detailView = !detailView}">
+            <div v-if="!props.profileModification" class="svg-container detaille" @click="$emit('detail')">
               <IconMoreInfos />
             </div>
           </div>
-          <div class="card-container" v-if="!profileModification">
-            <component v-if="detailView" :is="ProfileCardDetailledComponent" :user="props.otherUser"></component>
-            <component v-if="!detailView" :is="currentSection!.component" v-bind="currentSection!.props"></component>
+          <div class="card-container" v-if="!props.profileModification">
+            <component v-if="props.detailView" :is="ProfileCardDetailledComponent" :user="props.otherUser"></component>
+            <component v-if="!props.detailView" :is="currentSection!.component" v-bind="currentSection!.props"></component>
           </div>
-          <div class="card-container" v-if="profileModification">
-            <ProfileCardModificationComponent :user="props.user"/>
+          <div class="card-container" v-if="props.profileModification">
+            <ProfileCardModificationComponent :user="props.user" @updateuser="$emit('update')"/>
           </div>
           <div class="option-bar">
             <LikesOptionBar v-if="!isMyProfile" :connectedUser="user" :otherUser="props.otherUser" :otherUserProfilePic="pics[0]" @reset="resetImageBar"/>

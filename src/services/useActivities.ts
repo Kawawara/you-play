@@ -43,8 +43,7 @@ const useActivities = () => {
     }
 
     const verifyActivity = (activitie1:Activity, activitiesList:Activity[]) => {
-        const arrayList = [...activitiesList]
-        const sameActivity = arrayList.some( x => x.id == activitie1.id)
+        const sameActivity = activitiesList.some( x => x.id == activitie1.id)
         //activitie1.id == activitiesList.id
         if (sameActivity) {
             return true
@@ -54,7 +53,7 @@ const useActivities = () => {
     }
 
     const removeTagFromUser = async(userId: Number, tagId:number) => {
-        const response = await Axios.delete(`/usersActivities/{id}?idUser=${userId}&idActivity=${tagId}`)
+        const response = await Axios.delete(`/usersActivities/1?idUser=${userId}&idActivity=${tagId}`)
     }
     
     const addTagToUser = async(userId: Number, tagId:number) => {

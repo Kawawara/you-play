@@ -13,7 +13,18 @@ const useSearch =  async() =>
     }
     const getUser = async(id :Number) => {
         const response = await Axios.get(`users/${id}`)
-        return response.data.data[0] as UserComplet
+        if (response.status !== 200) throw new Error(`Error while fetching user with id: ${id}`)
+        const data = response.data.data
+        const userData = data[0]
+        const pictures = data[1]
+        const tags = data[2]
+
+        userData["activities"] = tags
+        userData["pictures"] = pictures
+
+        const fetchedUser: UserComplet = userData as UserComplet
+
+        return fetchedUser
       }
     const getPictures = async(id: Number) => {
         const response = await Axios.get(`photos?idUser=${id}`)

@@ -5,7 +5,7 @@ import { IconLike } from '@/components';
 import type { UserComplet, Activity } from '@/types';
 
 interface Emits {
-    (e: 'refresh'): void
+    (e: 'updateuser'): void,
 }
 const emits = defineEmits<Emits>();
 
@@ -28,10 +28,10 @@ const props = defineProps({
 
 const { addTagToUser, verifyActivity, getActivitiesByType } = useActivities()
 
-const submit = () => {
+const submit = async() => {
     if (getActivitiesByType(props.tagCategory, props.userTags).length < 5) {
-        addTagToUser(props.user.id, selectedTag.value)
-        emits('refresh')
+        await addTagToUser(props.user.id, selectedTag.value)
+        emits('updateuser')
     }
 }
 

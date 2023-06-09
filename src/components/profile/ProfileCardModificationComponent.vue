@@ -2,7 +2,7 @@
 import type { Activity,  UserComplet, InputField } from '@/types';
 import { Form } from 'vee-validate'
 import { object, string } from 'yup'
-import { VeeField, IconDislike, IconLike, TagFormComponnent } from '@/components'
+import { VeeField, IconDislike, TagFormComponnent } from '@/components'
 import { useActivities } from '@/services';
 import { ref } from 'vue';
 
@@ -22,10 +22,17 @@ const props = defineProps({
     }
 })
 
-const { getActivitiesByType, getActivities, verifyActivity, removeTagFromUser, addTagToUser } = useActivities()
+interface Emits {
+    (e: 'updateuser'): void
+}
+const emits = defineEmits<Emits>();
 
-const userTags :Activity[] = [{id: 1, type:1, name:undefined}]
+
+const { getActivitiesByType, getActivities, verifyActivity, removeTagFromUser } = useActivities()
+
+const userTags :Activity[] = props.user.activities
 const testList = ref<Activity[]>(await getActivities())
+    console.log(props.user)
 
 const tags: string | any[] = []
 tags[ActitiesType.MOVIETYPE] = {type: ActitiesType.MOVIETYPE , name:"Genres de films", activities: getActivitiesByType(ActitiesType.MOVIETYPE, testList.value)}
@@ -65,7 +72,8 @@ const verifyAll = (x :Activity, i: any) => {
 }
 
 const refreshDatas = async () => {
-    testList.value = await getActivities()
+    // console.log("refresh")
+    // await updateUserData()
 }
 
 </script>
@@ -84,7 +92,8 @@ const refreshDatas = async () => {
             <textarea id="description" class=" rounded-md shadow-sm w-full mt-2 description-field p-2 input" placeholder="Donnez quelques mots sur vous" :value="props.user.description"></textarea>
         </div>
         <div class="-space-y-px rounded-md shadow-sm modification-profile">
-            <div class="flex flex-col" v-for="i in tags">
+            <div class="flex flex-col" 
+            v-for="i in tags">
                 <label class="label">
                     <span class="label-text">Tags {{ i.name }}</span>
                 </label>
@@ -94,11 +103,11 @@ const refreshDatas = async () => {
                         <div class="flex justify-between align-middle">
                             <span>{{ tag.name ?? `tag n°${tag.id}` }}</span>
                             <div class="close-button-modal ml-1">
-                                <IconDislike @click="removeTagFromUser(props.user.id, tag.id)" />
+                                <IconDislike @click="async() => {await removeTagFromUser(props.user.id, tag.id);$emit('updateuser')}" />
                             </div>
                         </div>
                     </div>
-                    <TagFormComponnent :user="props.user" :tag-category="i" :user-tags="userTags" @refresh="refreshDatas()"/>
+                    <TagFormComponnent v-model:user="props.user" :tag-category="i" :user-tags="userTags" @updateuser="$emit('updateuser')"/>
                     
                 </div>
             </div>
