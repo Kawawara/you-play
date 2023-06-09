@@ -98,12 +98,14 @@ const refreshDatas = async () => {
                     <span class="label-text">Tags {{ i.name }}</span>
                 </label>
                 <div class="rounded-md shadow-sm bg-slate-50 text-black p-1">
-                    <div class="rounded-md shadow-sm bg-black/50 p-1 w-fit mx-1 flex"
-                    v-for="tag in userTags.filter(x => verifyAll(x, i))">
-                        <div class="flex justify-between align-middle">
-                            <span>{{ tag.name ?? `tag n°${tag.id}` }}</span>
-                            <div class="close-button-modal ml-1">
-                                <IconDislike @click="async() => {await removeTagFromUser(props.user.id, tag.id);$emit('updateuser')}" />
+                    <div class="flex flex-wrap">
+                        <div class="rounded-md shadow-sm bg-black/50 p-1 w-fit mx-1 flex  m-2"
+                        v-for="tag in userTags?.filter(x => verifyAll(x, i))">
+                            <div class="flex justify-between align-middle ">
+                                <span>{{ tag.name ?? `tag n°${tag.id}` }}</span>
+                                <div class="close-button-modal ml-1">
+                                    <IconDislike @click="async() => {await removeTagFromUser(props.user.id, tag.id);$emit('updateuser')}" />
+                                </div>
                             </div>
                         </div>
                     </div>

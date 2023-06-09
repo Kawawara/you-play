@@ -38,18 +38,23 @@ const useActivities = () => {
         return [] as Activity[]
     }
     const getActivitiesByType = (type :Number, activities:Activity[]) => {
-        const activitiesReturn = activities.filter(activity => activity.type == type)
+        const activitiesReturn = activities?.filter(activity => activity.type == type) ?? []
         return activitiesReturn
     }
 
     const verifyActivity = (activitie1:Activity, activitiesList:Activity[]) => {
-        const sameActivity = activitiesList.some( x => x.id == activitie1.id)
-        //activitie1.id == activitiesList.id
-        if (sameActivity) {
-            return true
-        } else {
-            return false
+        if (activitiesList?.length != undefined) {
+            if (activitiesList.length > 0) {
+                const sameActivity = activitiesList.some( x => x.id == activitie1.id)
+                //activitie1.id == activitiesList.id
+                if (sameActivity) {
+                    return true
+                } else {
+                    return false
+                }
+            }
         }
+        return false
     }
 
     const removeTagFromUser = async(userId: Number, tagId:number) => {

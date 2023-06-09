@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AppLayout, ParametresMenu, ProfileCard, PromotionsMenu } from '@/components';
+import { AppLayout, ParametresMenu, ProfileCard, PromotionsMenu, Spinner } from '@/components';
 import { useAuth, useSearch } from '@/services'
 import type { UserComplet } from '@/types';
 import { ref } from 'vue';

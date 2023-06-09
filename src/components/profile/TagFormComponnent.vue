@@ -29,7 +29,7 @@ const props = defineProps({
 const { addTagToUser, verifyActivity, getActivitiesByType } = useActivities()
 
 const submit = async() => {
-    if (getActivitiesByType(props.tagCategory, props.userTags).length < 5) {
+    if (getActivitiesByType(props.tagCategory.type, props.userTags).length < 5) {
         await addTagToUser(props.user.id, selectedTag.value)
         emits('updateuser')
     }
@@ -44,7 +44,7 @@ const submit = async() => {
             <option v-for="tag in tagCategory.activities" :disabled="verifyActivity(tag, userTags)" v-bind:value="tag.id"> {{ tag.name ?? `tag n°${tag.id}` }}</option>
         </select>
         <div class="close-button-modal ml-1">
-            <IconLike @click="submit()" />
+            <IconLike @click="submit()" v-if="getActivitiesByType(props.tagCategory.type, props.userTags).length < 5"/>
         </div>
     </div>
   </div>
