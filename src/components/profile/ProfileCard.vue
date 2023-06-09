@@ -5,19 +5,30 @@ import {
   ProfileCardModificationComponent,
   ProfileDescriptionComponnent,
   ProfileStatusComponent,
-  ProfileTagsMusiqueComponent,
+  ProfileTagsOfflineGamesComponent,
   ProfileTagsMovieComponent,
   ProfileTagsVideoGamesComponent,
-  ProfileTagsLangageComponent,
   ProfileTagsSportsComponent,
   ProfilePicturesIndicator,
   LikesOptionBar,
   IconSetting,
-  ProfilePictureModification
+  ProfilePictureModification,
+ProfileTagsActivitiesComponent,
+ProfileTagsNightActivitiesComponent
 } from '@/components'
 import type { UserComplet, User } from '@/types';
 import { computed, defineComponent, ref } from 'vue';
 import { useSearch } from '@/services'
+
+enum ActitiesType {
+    NIGHTACTIVITY = 6, 
+    ACTIVITY = 5,
+    OFFLINEGAME = 4, 
+    ONLINEGAME = 3,
+    SPORTS = 2,
+    MOVIETYPE = 1
+}
+// TODO filter on getActivitybyUSer
 
 const { getPictures } = await useSearch()
 
@@ -33,11 +44,12 @@ const props = defineProps({
 })
 const pics = await getPictures(props?.otherUser?.id ?? props?.user?.id)
 
-const tags_musique = ["Techno", "Rap", "Pop", "Jazz", "Latino"]
-const tags_movies = ["Harry Potter", "Back to the Future", "Spider-Man"]
+const tags_offline_video_games = ["zelda", "tetris", "darksoul"]
+const tags_movies_type = ["Drama", "Horreur", "Sci-fi"]
 const tags_video_games = ["R6S", "FIFA", "Super Mario", "Poker"]
 const tags_sports = ["Kayak", "Badminton", "MMA"]
-const tags_langage = ["Français", "Franglais"]
+const tags_activities = ["Café", "Musés"]
+const tags_night_activities = ["Boites de nuit", "Bars"]
 
 const sections = [
   {
@@ -78,36 +90,38 @@ const sections = [
   },
   {
     position: 5,
-    component: ProfileTagsMusiqueComponent,
+    component: ProfileTagsOfflineGamesComponent,
     props: {
-      name: "Musiques",
+      name: "Jeux vidéos offline",
       user_id: props.otherUser?.id,
-      tags: tags_musique
+      tags: tags_offline_video_games
     }
   },
   {
     position: 6,
     component: ProfileTagsMovieComponent,
     props: {
-      name: "Films",
+      name: "Genres de films",
       user_id: props.otherUser?.id,
-      tags: tags_movies
+      tags: tags_movies_type
     }
   },
   {
     position: 7,
-    component: ProfileTagsLangageComponent,
+    component: ProfileTagsActivitiesComponent,
     props: {
-      name: "Langues",
+      name: "Sorties",
       user_id: props.otherUser?.id,
-      tags: tags_langage
+      tags: tags_activities
     }
   },
   {
     position: 8,
-    component: defineComponent({}),
+    component: ProfileTagsNightActivitiesComponent,
     props: {
-      name: ""
+      name: "Sorties nocturnes",
+      user_id: props.otherUser?.id,
+      tags: tags_activities
     }
   },
   {
