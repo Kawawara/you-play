@@ -14,8 +14,6 @@ var hasAbonnement = false;
 const abonnements = await getSubscriptions(user.value.id);
 if(abonnements.length > 0){
     hasAbonnement = true;
-    // enlever
-    hasAbonnement = false;
 }
 
 var notAbonneWithLikes = false;
@@ -94,7 +92,8 @@ if(!hasAbonnement){
 
 <template>
     <ul class="match-list" style="max-height: 80vh;">
-        <li v-if="notAbonneWithLikes" class="match-card likes" id="background-likes" :style="{ backgroundImage: `url(${lastLike.secondUserPhoto})`}">
+        <li v-if="notAbonneWithLikes" class="match-card likes">
+            <div id="background-likes" :style="{ backgroundImage: `url(${lastLike.secondUserPhoto})`}"></div>
             <h3>{{nbLike}} Likes</h3>
         </li>
         <li v-for="like in myLikes" :key="like.id" class="match-card likes" :style="{ backgroundImage: `url(${like.secondUserPhoto})`}">
@@ -124,7 +123,7 @@ if(!hasAbonnement){
 }
   
 #background-likes {
-    @apply blur-sm
+    @apply absolute inset-0 bg-cover bg-no-repeat filter blur-sm;
 }
   
 .match-card h3 {
