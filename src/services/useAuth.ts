@@ -37,8 +37,13 @@ const useAuth = async () => {
         const data = response.data.data
         const userData = data[0]
         const pictures = data[1]
+        const tags = data[2]
 
-        const fetchedUser: UserComplet = userData
+        userData["activities"] = tags
+        userData["pictures"] = pictures
+
+        const fetchedUser: UserComplet = userData as UserComplet
+        console.log(fetchedUser)
         user.value = fetchedUser
         return true
       } catch(e) {
@@ -109,6 +114,24 @@ const useAuth = async () => {
     return toast.success('User has been deleted')
   }
 
+  const updateUserData = async () => {
+    console.log(user)
+    const response = await Axios.get(`users/${user.value?.id}/`)
+        
+    if (response.status !== 200) throw new Error(`Error while fetching user with id: ${user.value?.id}`)
+    const data = response.data.data
+    const userData = data[0]
+    const pictures = data[1]
+    const tags = data[2]
+
+    userData["activities"] = tags
+    userData["pictures"] = pictures
+
+    const fetchedUser: UserComplet = userData as UserComplet
+    console.log(fetchedUser)
+    user.value = fetchedUser
+  }
+
 
   return {
     user,
@@ -120,7 +143,8 @@ const useAuth = async () => {
     setUser,
     register,
     putUser,
-    deleteUser
+    deleteUser,
+    updateUserData
   }
 }
 

@@ -1,3 +1,5 @@
+import type { Activity, Picture } from "@/types";
+
 export type User = {
   id: number
   username: string
@@ -14,7 +16,9 @@ export type UserComplet = {
   gender: string,
   city: string,
   age: number,
-  description: string
+  description: string,
+  activities: Activity[],
+  pictures : Picture[]
 }
 
 export type Prefs = {

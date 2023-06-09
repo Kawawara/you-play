@@ -25,11 +25,13 @@ export { default as ProfileCardDetailledComponent } from './profile/ProfileCardD
 export { default as ProfilePicturesIndicator } from './profile/ProfilePicturesIndicator.vue'
 export { default as ProfileStatusComponent } from './profile/ProfileStatusComponent.vue'
 export { default as ProfileDescriptionComponnent } from './profile/ProfileDescriptionComponnent.vue'
-export { default as ProfileTagsMusiqueComponent } from './profile/ProfileTagsMusiqueComponent.vue'
+export { default as ProfileTagsOfflineGamesComponent } from './profile/ProfileTagsOfflineGamesComponent.vue'
 export { default as ProfileTagsMovieComponent } from './profile/ProfileTagsMovieComponent.vue'
 export { default as ProfileTagsVideoGamesComponent } from './profile/ProfileTagsVideoGamesComponent.vue'
-export { default as ProfileTagsLangageComponent } from './profile/ProfileTagsLangageComponent.vue'
+export { default as ProfileTagsActivitiesComponent } from './profile/ProfileTagsActivitiesComponent.vue'
+export { default as ProfileTagsNightActivitiesComponent } from './profile/ProfileTagsNightActivitiesComponent.vue'
 export { default as ProfileTagsSportsComponent } from './profile/ProfileTagsSportsComponent.vue'
+export { default as TagFormComponnent } from './profile/TagFormComponnent.vue'
 
 // Messages
 export { default as MessagesMenu } from './messages/MessagesMenu.vue'
