@@ -43,7 +43,6 @@ const useActivities = () => {
     }
 
     const verifyActivity = (activitie1:Activity, activitiesList:Activity[]) => {
-        console.log(activitiesList)
         const arrayList = [...activitiesList]
         const sameActivity = arrayList.some( x => x.id == activitie1.id)
         //activitie1.id == activitiesList.id
