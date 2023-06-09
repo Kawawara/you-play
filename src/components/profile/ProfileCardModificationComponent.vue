@@ -5,6 +5,15 @@ import { object, string } from 'yup'
 import type { InputField } from '@/types';
 import { VeeField } from '@/components'
 
+enum ActitiesType {
+    NIGHTACTIVITY = 6, 
+    ACTIVITY = 5,
+    OFFLINEGAME = 4, 
+    ONLINEGAME = 3,
+    SPORTS = 2,
+    MOVIETYPE = 1
+}
+
 const props = defineProps({
     user : {
         type : Object as () => UserComplet,
@@ -45,6 +54,37 @@ const schema = object().shape({
                 <span class="label-text">Déscription</span>
             </label>
             <textarea id="description" class=" rounded-md shadow-sm w-full mt-2 description-field p-2 input" placeholder="Donnez quelques mots sur vous" :value="props.user.description"></textarea>
+        </div>
+        <div class="-space-y-px rounded-md shadow-sm modification-profile">
+            <div class="flex flex-col">
+                <label class="label">
+                    <span class="label-text">Tags Jeux vidéos</span>
+                </label>
+                <div class="rounded-md shadow-sm bg-slate-50 text-black">
+                    betedg
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <label class="label">
+                    <span class="label-text">Tags Sports</span>
+                </label>
+                <div class="rounded-md shadow-sm bg-slate-50 text-black"></div>
+            </div>
+            <div class="flex flex-col">
+                <label class="label">
+                    <span class="label-text">Tags Musique</span>
+                </label>
+            </div>
+            <div class="flex flex-col">
+                <label class="label">
+                    <span class="label-text">Tags films</span>
+                </label>
+            </div>
+            <div class="flex flex-col">
+                <label class="label">
+                    <span class="label-text">Tags Langues</span>
+                </label>
+            </div>
         </div>
         </Form>
 </template>
