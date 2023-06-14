@@ -1,4 +1,4 @@
-<script setup lan="ts">
+<script setup lang="ts">
 const props = defineProps({
     position: {
       type: Number,

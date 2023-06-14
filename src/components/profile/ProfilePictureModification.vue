@@ -23,7 +23,7 @@ if (props.picture !== undefined) {
     <div class="profile-picture-modification-zone rounded-md shadow-sm">
         <span>{{ props.position }}</span>
         <div class="close-button-modal" v-if="isPicture">
-            <IconDislike @click="() => {console.log('delete picture')}" />
+            <IconDislike />
         </div>
         <div>
             <br>

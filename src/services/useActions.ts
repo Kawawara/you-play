@@ -7,7 +7,6 @@ import { renderOverlay } from '@overlays/vue'
 
 const toast = useToast()
 const { Axios } = useAxios()
-const { getUsers } = await useSearch();
 
 enum Actions {LIKE = "like",DISLIKE = "dislike",GOBACK = "goback", SUPERLIKE = "superlike"}
 type LastAction = {
@@ -16,11 +15,24 @@ type LastAction = {
 }
 
 const lastAction = ref<LastAction>()
-const users = ref<UserComplet[]>()
+const users = ref<[UserComplet]>([{
+    id: 1,
+    username: "a",
+    email:"a",
+    name: "a",
+    lastName: "a", 
+    gender: "a", 
+    city :"a", 
+    age: 21,
+    description: "a",
+    activities: [{id:1, type:2}],
+    pictures: [{id:1, fileName:"a", position:1}]
+}])
 const lastUser = ref<UserComplet>()
 
 const useActions =  async() =>
 {
+    const { getUsers } = await useSearch();
     const postLike = async(userid: Number, likedId :Number, likedUser :UserComplet, profilePic :Picture) => {
         const data = {
             idUserWhoLiked   : userid,
@@ -102,11 +114,13 @@ const useActions =  async() =>
         }
     }
     const nextUser = () => {
-        lastUser.value = users.value.shift()
+        if (users != undefined) {
+            lastUser.value = users?.value?.shift()
+        }
     }
     const previousUser = () => {
         if (lastUser.value != undefined) {
-            users.value.unshift(lastUser.value)
+            users?.value?.unshift(lastUser.value)
             lastUser.value = undefined
         }
     }
@@ -136,7 +150,7 @@ const useActions =  async() =>
         }
     }
     const initService = async(id: Number) => {
-        if (users.value == undefined || users.value.length == 0) {
+        if (users.value == undefined || users.value.length > 0) {
                 users.value = await getUsers(id)
         }
     }

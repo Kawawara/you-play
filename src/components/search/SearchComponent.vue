@@ -16,10 +16,28 @@ const props = defineProps({
 const loaded = ref(false)
 initService(props.user.id)
 var aviableUsers = [props.user]  
-if (users != undefined) {
-  aviableUsers = users
-  loaded.value = true
-} 
+if (users.value != undefined) {
+  try {
+    aviableUsers = users.value
+    loaded.value = true
+  } catch (e) {
+    //
+  }
+} else {
+  aviableUsers = [{
+                id: 1,
+                username: "a",
+                email:"a",
+                name: "a",
+                lastName: "a", 
+                gender: "a", 
+                city :"a", 
+                age: 21,
+                description: "a",
+                activities: [{id:1, type:2}],
+                pictures: [{id:1, fileName:"a", position:1}]
+            }]
+}
 </script>
 
 <template>
