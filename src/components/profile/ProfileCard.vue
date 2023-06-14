@@ -189,7 +189,7 @@ function resetImageBar() {
       <div :class="{' scroll-without-scrollbar' : props.detailView||props.profileModification, 'h-full': !props.detailView&&!props.profileModification}">
 
         <div class="relative" v-if="!props.profileModification">
-          <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (currentPicture?.fileName ?? 'utilisateur1.png')" />
+          <img class="user-picture" :src="'http://dev.you-play.fr/api/public/' + (currentPicture?.fileName ?? 'utilisateur1.png')" />
           <div class="pictures-indicator" v-if="pics.length > 0">
             <ProfilePicturesIndicator :position="currentSectionIndex" :total="pics.length" />
           </div>

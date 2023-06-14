@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useJWT } from '@/services'
 
 const defaultConfig = {
-  baseURL: 'http://127.0.0.1:8000/api',
+  baseURL: 'http://dev.you-play.fr/api',
   headers: {
     content: 'application/json'
   }

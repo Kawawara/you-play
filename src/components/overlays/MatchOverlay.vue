@@ -30,7 +30,7 @@
             </div>
         </div>
         <div>
-            <img class="user-picture" :src="'http://127.0.0.1:8000/api/public/' + (profilePic?.fileName ?? 'utilisateur1.png')" />
+            <img class="user-picture" :src="'http://dev.you-play.fr/api/public/' + (profilePic?.fileName ?? 'utilisateur1.png')" />
             <h2 class="no-padding-margin title">{{ likedUser.name }}, {{ likedUser.age }}</h2>
         </div>
         <div class="spaced-content">

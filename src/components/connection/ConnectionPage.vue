@@ -31,7 +31,7 @@ import { useAuth } from '@/services';
           <div class="divider lg:divider-vertical">OR</div> 
           <div class="flex justify-center grid-rows-3 gap-5">
             <button><IconFB/></button>
-            <a href="http://localhost:4000/auth/google"><button><IconGoogle/></button></a>
+            <a href="http://dev.you-play.fr/auth/google"><button><IconGoogle/></button></a>
             <button><IconLinkedIn/></button>
           </div>
         </div>
