@@ -2,7 +2,6 @@
 import { AppLayout, LikesMenu, MessagesMenu } from '@/components';
 import { useAuth } from '@/services'
 import { useRouter } from 'vue-router'
-import SearchComponentDetaille from '../components/search/SearchComponentDetaille.vue'
 
 const {user} = await useAuth();
 
@@ -35,7 +34,6 @@ const tabs = [
 <template>
     <AppLayout :tabs="tabs"  :profile="true">
 
-      <SearchComponentDetaille></SearchComponentDetaille>
 
     </AppLayout>
 </template>
